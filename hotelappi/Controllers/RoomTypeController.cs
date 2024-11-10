@@ -8,27 +8,34 @@ namespace HotelManagementApp.Web.Controllers
 	[Route("api/roomtypes")]
 	[ApiController]
 	public class RoomTypeController : ControllerBase
-    {
+	{
 		private readonly IDatabaseDataAsync _db;
 
-        public RoomTypeController(IDatabaseDataAsync db)
-        {
-            _db = db;
-        }
+		public RoomTypeController(IDatabaseDataAsync db)
+		{
+			_db = db;
+		}
 
 		[HttpGet("{id}")]
-		public async Task <ActionResult<RoomTypeModel>> GetRoomTypeById(int id)
-        {
-            var roomType= await _db.GetRoomTypeByIdAsync(id);
-            if(roomType == null)
-            {
-                return NotFound();
-            }
+		public async Task<ActionResult<RoomTypeModel>> GetRoomTypeById(int id)
+		{
+			try
+			{
+				var roomType = await _db.GetRoomTypeByIdAsync(id);
+				if (roomType == null)
+				{
+					return NotFound();
+				}
 
-            return Ok(roomType);
-        }
+				return Ok(roomType);
+			}catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			
+		}
 		[HttpGet("available")]
-		public async Task <ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+		public async Task<ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
 		{
 			try
 			{
@@ -40,6 +47,27 @@ namespace HotelManagementApp.Web.Controllers
 				}
 
 				return Ok(availableRoomTypes);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+		}
+
+		[HttpGet ("allroomtypes")]
+		public async Task<ActionResult<List<RoomTypeModel>>> GetAllRoomTypes()
+		{
+			try
+			{
+				var allRoomTypes = await _db.GetAllRoomTypesAsync();
+
+				if (allRoomTypes == null || !allRoomTypes.Any())
+				{
+					return NotFound();
+				}
+
+				return Ok(allRoomTypes);
 			}
 			catch (Exception ex)
 			{

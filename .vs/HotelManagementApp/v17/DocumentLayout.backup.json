@@ -7,36 +7,12 @@
       "RelativeMoniker": "D:0:0:{40443CD1-5EB4-43D1-B035-3BECD8CA4755}|hotelappi\\hotelappi.csproj|solutionrelative:hotelappi\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40443CD1-5EB4-43D1-B035-3BECD8CA4755}|hotelappi\\hotelappi.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\hotelappi\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40443CD1-5EB4-43D1-B035-3BECD8CA4755}|hotelappi\\hotelappi.csproj|solutionrelative:hotelappi\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{943C101A-F2AD-4286-AA22-2E4663C49C0D}|SQLDataAccessLibrary\\DataAccessLibrary.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\sqldataaccesslibrary\\data\\sqldataasync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{943C101A-F2AD-4286-AA22-2E4663C49C0D}|SQLDataAccessLibrary\\DataAccessLibrary.csproj|solutionrelative:sqldataaccesslibrary\\data\\sqldataasync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{943C101A-F2AD-4286-AA22-2E4663C49C0D}|SQLDataAccessLibrary\\DataAccessLibrary.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\sqldataaccesslibrary\\data\\idatabasedataasync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{943C101A-F2AD-4286-AA22-2E4663C49C0D}|SQLDataAccessLibrary\\DataAccessLibrary.csproj|solutionrelative:sqldataaccesslibrary\\data\\idatabasedataasync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40443CD1-5EB4-43D1-B035-3BECD8CA4755}|hotelappi\\hotelappi.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\hotelappi\\hotelappi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{40443CD1-5EB4-43D1-B035-3BECD8CA4755}|hotelappi\\hotelappi.csproj|solutionrelative:hotelappi\\hotelappi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\hotelmanagementapp.web\\pages\\roomsearch.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|solutionrelative:hotelmanagementapp.web\\pages\\roomsearch.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\hotelmanagementapp.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|solutionrelative:hotelmanagementapp.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\hotelmanagementapp.web\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|solutionrelative:hotelmanagementapp.web\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\hotelmanagementapp.web\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1F6F0AC4-DB3D-443F-894C-0B53C97BFED8}|HotelManagementApp.Web\\HotelManagementApp.Web.csproj|solutionrelative:hotelmanagementapp.web\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{943C101A-F2AD-4286-AA22-2E4663C49C0D}|SQLDataAccessLibrary\\DataAccessLibrary.csproj|c:\\users\\user\\source\\repos\\hotelmanagementapp\\sqldataaccesslibrary\\data\\sqldataasync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{943C101A-F2AD-4286-AA22-2E4663C49C0D}|SQLDataAccessLibrary\\DataAccessLibrary.csproj|solutionrelative:sqldataaccesslibrary\\data\\sqldataasync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,99 +22,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "hotelappi",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\hotelappi.csproj",
-              "RelativeDocumentMoniker": "hotelappi\\hotelappi.csproj",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\hotelappi.csproj",
-              "RelativeToolTip": "hotelappi\\hotelappi.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-11-09T18:32:05.932Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BookingsController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\Controllers\\BookingsController.cs",
-              "RelativeDocumentMoniker": "hotelappi\\Controllers\\BookingsController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\Controllers\\BookingsController.cs",
-              "RelativeToolTip": "hotelappi\\Controllers\\BookingsController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAPAAAAAAAAAA==",
+              "Title": "IDatabaseDataAsync.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
+              "RelativeDocumentMoniker": "SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
+              "RelativeToolTip": "SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T15:41:02.692Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RoomSearch.cshtml",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Pages\\RoomSearch.cshtml",
-              "RelativeDocumentMoniker": "HotelManagementApp.Web\\Pages\\RoomSearch.cshtml",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Pages\\RoomSearch.cshtml",
-              "RelativeToolTip": "HotelManagementApp.Web\\Pages\\RoomSearch.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-09T15:09:49.604Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RoomTypeController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Controllers\\RoomTypeController.cs",
-              "RelativeDocumentMoniker": "HotelManagementApp.Web\\Controllers\\RoomTypeController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Controllers\\RoomTypeController.cs",
-              "RelativeToolTip": "HotelManagementApp.Web\\Controllers\\RoomTypeController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwC0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T15:09:27.261Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RoomTypeController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\Controllers\\RoomTypeController.cs",
-              "RelativeDocumentMoniker": "hotelappi\\Controllers\\RoomTypeController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\Controllers\\RoomTypeController.cs",
-              "RelativeToolTip": "hotelappi\\Controllers\\RoomTypeController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T15:09:16.977Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BookingsController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Controllers\\BookingsController.cs",
-              "RelativeDocumentMoniker": "HotelManagementApp.Web\\Controllers\\BookingsController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Controllers\\BookingsController.cs",
-              "RelativeToolTip": "HotelManagementApp.Web\\Controllers\\BookingsController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T14:36:58.589Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Program.cs",
-              "RelativeDocumentMoniker": "HotelManagementApp.Web\\Program.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\HotelManagementApp.Web\\Program.cs",
-              "RelativeToolTip": "HotelManagementApp.Web\\Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T14:35:34.933Z",
+              "WhenOpened": "2024-11-10T15:32:46.458Z",
               "EditorCaption": ""
             },
             {
@@ -149,22 +45,22 @@
               "RelativeDocumentMoniker": "SQLDataAccessLibrary\\Data\\SqlDataAsync.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\Data\\SqlDataAsync.cs",
               "RelativeToolTip": "SQLDataAccessLibrary\\Data\\SqlDataAsync.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAADwv1YAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T14:33:48.59Z",
+              "WhenOpened": "2024-11-10T15:32:45.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IDatabaseDataAsync.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
-              "RelativeDocumentMoniker": "SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
-              "RelativeToolTip": "SQLDataAccessLibrary\\Data\\IDatabaseDataAsync.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "RoomTypeController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\Controllers\\RoomTypeController.cs",
+              "RelativeDocumentMoniker": "hotelappi\\Controllers\\RoomTypeController.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\Controllers\\RoomTypeController.cs",
+              "RelativeToolTip": "hotelappi\\Controllers\\RoomTypeController.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowEUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T14:33:36.433Z",
+              "WhenOpened": "2024-11-09T15:09:16.977Z",
               "EditorCaption": ""
             }
           ]

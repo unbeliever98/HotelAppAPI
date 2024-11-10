@@ -82,5 +82,13 @@ namespace DataAccessLibrary.Data
 											   connectionStringName,
 											   true)).First();
 		}
+
+		public async Task<List<RoomTypeModel>> GetAllRoomTypesAsync()
+		{
+			return await _db.LoadDataAsync<RoomTypeModel, dynamic>("dbo.spRoomTypes_GetAllRoomTypes",
+														  new { },
+														  connectionStringName,
+														  true);
+		}
 	}
 }

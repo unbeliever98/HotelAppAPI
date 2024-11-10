@@ -9,5 +9,6 @@ namespace DataAccessLibrary.Data
 		Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate);
 		Task<RoomTypeModel> GetRoomTypeByIdAsync(int id);
 		Task<List<BookingFullModel>> SearchBookingsAsync(string lastName);
+		Task<List<RoomTypeModel>> GetAllRoomTypesAsync();
 	}
 }
