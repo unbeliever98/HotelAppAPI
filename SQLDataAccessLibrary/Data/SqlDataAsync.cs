@@ -29,7 +29,7 @@ namespace DataAccessLibrary.Data
 		public async Task BookGuestAsync(string firstName, string lastName, DateTime startDate, DateTime endDate, int roomTypeId)
 		{
 
-			GuestModel guest = (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_Insert",
+			GuestModel guest = (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_Register",
 													   new { firstName, lastName },
 													   connectionStringName,
 													   true)).First();
@@ -89,6 +89,25 @@ namespace DataAccessLibrary.Data
 														  new { },
 														  connectionStringName,
 														  true);
+		}
+
+		public async Task RegisterGuest(string firstName, string lastName, string email, string password)
+		{
+
+			await _db.SaveDataAsync("dbo.spGuests_Register", new
+			{
+				firstName,
+				lastName,
+				email,
+				password
+			}, connectionStringName, true);
+
+		}
+
+		public async Task<List<string>> GetAllEmails()
+		{
+			var emails = await _db.LoadDataAsync<string, dynamic>("dbo.spGuests_GetEmails", new { }, connectionStringName, true);
+			return emails;
 		}
 	}
 }

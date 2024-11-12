@@ -10,3 +10,4 @@ C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net
 C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\refint\DataAccessLibrary.dll
 C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.pdb
 C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\ref\DataAccessLibrary.dll
+C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.sourcelink.json

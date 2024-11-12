@@ -27,6 +27,26 @@
   },
   {
     "ContainingType": "HotelManagementApp.Web.Controllers.RoomTypeController",
+    "Method": "GetAllRoomTypes",
+    "RelativePath": "api/roomtypes/allroomtypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DataAccessLibrary.Models.RoomTypeModel, DataAccessLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.RoomTypeController",
     "Method": "GetAvailableRoomTypes",
     "RelativePath": "api/roomtypes/available",
     "HttpMethod": "GET",
@@ -55,6 +75,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "hotelappi.Controllers.UsersController",
+    "Method": "Register",
+    "RelativePath": "api/users/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "guest",
+        "Type": "DataAccessLibrary.Models.GuestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",

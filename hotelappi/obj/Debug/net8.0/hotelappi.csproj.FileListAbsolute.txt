@@ -150,3 +150,11 @@ C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Debug\net8.0\refint\
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Debug\net8.0\hotelappi.pdb
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Debug\net8.0\hotelappi.genruntimeconfig.cache
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Debug\net8.0\ref\hotelappi.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Debug\net8.0\hotelappi.sourcelink.json
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\bin\Debug\net8.0\BCrypt.Net-Next.dll

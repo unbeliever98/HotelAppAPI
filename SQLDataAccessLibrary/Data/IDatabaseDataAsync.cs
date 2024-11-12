@@ -10,5 +10,7 @@ namespace DataAccessLibrary.Data
 		Task<RoomTypeModel> GetRoomTypeByIdAsync(int id);
 		Task<List<BookingFullModel>> SearchBookingsAsync(string lastName);
 		Task<List<RoomTypeModel>> GetAllRoomTypesAsync();
+		Task RegisterGuest(string firstName, string lastName, string email, string password);
+		Task<List<string>> GetAllEmails();
 	}
 }
