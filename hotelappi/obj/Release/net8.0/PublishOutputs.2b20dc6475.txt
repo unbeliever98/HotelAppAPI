@@ -8,6 +8,7 @@ C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTm
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Azure.Identity.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\BCrypt.Net-Next.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Dapper.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.Data.SqlClient.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.EntityFrameworkCore.dll

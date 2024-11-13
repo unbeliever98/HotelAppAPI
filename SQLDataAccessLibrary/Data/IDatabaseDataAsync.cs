@@ -11,6 +11,7 @@ namespace DataAccessLibrary.Data
 		Task<List<BookingFullModel>> SearchBookingsAsync(string lastName);
 		Task<List<RoomTypeModel>> GetAllRoomTypesAsync();
 		Task RegisterGuest(string firstName, string lastName, string email, string password);
-		Task<List<string>> GetAllEmails();
+		Task<List<string>> GetAllGuestEmails();
+		Task<GuestModel> GetGuestInfo(string email);
 	}
 }

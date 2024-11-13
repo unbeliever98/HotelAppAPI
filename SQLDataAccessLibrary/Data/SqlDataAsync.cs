@@ -3,6 +3,7 @@ using DataAccessLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -104,10 +105,14 @@ namespace DataAccessLibrary.Data
 
 		}
 
-		public async Task<List<string>> GetAllEmails()
+		public async Task<List<string>> GetAllGuestEmails()
 		{
-			var emails = await _db.LoadDataAsync<string, dynamic>("dbo.spGuests_GetEmails", new { }, connectionStringName, true);
-			return emails;
+			return await _db.LoadDataAsync<string, dynamic>("dbo.spGuests_GetEmails", new { }, connectionStringName, true);		
+		}
+
+		public async Task<GuestModel> GetGuestInfo(string email)
+		{
+			return (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_GetEmail", new {email}, connectionStringName, true)).FirstOrDefault();
 		}
 	}
 }
