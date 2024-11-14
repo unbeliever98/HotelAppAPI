@@ -14,6 +14,7 @@ namespace DataAccessLibrary.Models
         public decimal Price { get; set; }
         public decimal Rating { get; set; }
         public string Image { get; set; }
+        public string FullDescription { get; set; }
 
     }
 }

@@ -109,6 +109,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "hotelappi.Controllers.UsersController",
+    "Method": "UpdatePassword",
+    "RelativePath": "api/users/update-password",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pwModel",
+        "Type": "DataAccessLibrary.Models.UpdatePasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
     "Method": "BookRoom",
     "RelativePath": "webapi/bookings/book",

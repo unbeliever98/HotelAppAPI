@@ -28,7 +28,7 @@ namespace hotelappi.Controllers
 		[Route("register")]
 		public async Task <ActionResult> Register([FromBody]GuestDTO guest)
 		{
-			var allEmails=await _db.GetAllGuestEmails();
+			var allEmails=await _db.GetAllGuestEmailsAsync();
 
 			if (allEmails.Contains(guest.Email))
 			{
@@ -39,7 +39,7 @@ namespace hotelappi.Controllers
 
 			try
 			{
-				await _db.RegisterGuest(guest.FirstName, guest.LastName,guest.Email, hashedPassword);
+				await _db.RegisterGuestAsync(guest.FirstName, guest.LastName,guest.Email, hashedPassword);
 				return Ok(new {User=guest.FirstName, guest.Email});
 			}
 			catch (Exception ex)
@@ -52,7 +52,7 @@ namespace hotelappi.Controllers
 		[Route("login")]
 		public async Task<ActionResult> Login([FromBody] LoginDTO login)
 		{
-			var user = await _db.GetGuestInfo(login.Email);
+			var user = await _db.GetGuestInfoAsync(login.Email);
 
 			if (user == null || string.IsNullOrEmpty(user.Email))
 			{
@@ -71,6 +71,7 @@ namespace hotelappi.Controllers
 				new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 				new Claim("Email", user.Email.ToString()),
+				new Claim("UserId",user.Id.ToString())
 			};
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -83,7 +84,40 @@ namespace hotelappi.Controllers
 									signingCredentials: signIn);
 
 			string tokenValue=new JwtSecurityTokenHandler().WriteToken(token);
-			return Ok(new {Token=tokenValue, User=user.Email, user.FirstName});
+			return Ok(new {Token=tokenValue, User=user.Email, user.FirstName, user.LastName});
+		}
+		[Authorize]
+		[HttpPut]
+		[Route("update-password")]
+		public async Task <ActionResult> UpdatePassword([FromBody] UpdatePasswordModel pwModel)
+		{
+			if (pwModel == null || string.IsNullOrEmpty(pwModel.CurrentPassword) || string.IsNullOrEmpty(pwModel.NewPassword))
+			{
+				return BadRequest("Current and new passwords are required.");
+			}
+
+			var userIdString = User.FindFirst("UserId")?.Value;
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var user = await _db.GetGuestByIdAsync(userIdInt);
+			if (user == null)
+			{
+				return NotFound("User not found.");
+			}
+
+			bool isPasswordValid = BCrypt.Net.BCrypt.EnhancedVerify(pwModel.CurrentPassword, user.PasswordHash);
+			if (!isPasswordValid)
+			{
+				return Unauthorized("Invalid current password.");
+			}
+
+			user.PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(pwModel.NewPassword);
+
+			await _db.ChangePasswordAsync(userIdInt, user.PasswordHash);
+			return Ok("Password changed successfully.");
 
 		}
     }

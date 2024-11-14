@@ -92,7 +92,7 @@ namespace DataAccessLibrary.Data
 														  true);
 		}
 
-		public async Task RegisterGuest(string firstName, string lastName, string email, string password)
+		public async Task RegisterGuestAsync(string firstName, string lastName, string email, string password)
 		{
 
 			await _db.SaveDataAsync("dbo.spGuests_Register", new
@@ -105,14 +105,24 @@ namespace DataAccessLibrary.Data
 
 		}
 
-		public async Task<List<string>> GetAllGuestEmails()
+		public async Task<List<string>> GetAllGuestEmailsAsync()
 		{
 			return await _db.LoadDataAsync<string, dynamic>("dbo.spGuests_GetEmails", new { }, connectionStringName, true);		
 		}
 
-		public async Task<GuestModel> GetGuestInfo(string email)
+		public async Task<GuestModel> GetGuestInfoAsync(string email)
 		{
 			return (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_GetEmail", new {email}, connectionStringName, true)).FirstOrDefault();
+		}
+
+		public async Task<GuestModel> GetGuestByIdAsync(int id)
+		{
+			return (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_GetGuestById", new { id }, connectionStringName, true)).FirstOrDefault();
+		}
+
+		public async Task ChangePasswordAsync(int id, string passwordHash)
+		{
+			await _db.SaveDataAsync("dbo.SpGuests_UpdatePassword", new { passwordHash, id }, connectionStringName, true);
 		}
 	}
 }
