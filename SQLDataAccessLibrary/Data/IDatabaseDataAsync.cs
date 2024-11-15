@@ -15,5 +15,6 @@ namespace DataAccessLibrary.Data
 		Task<GuestModel> GetGuestInfoAsync(string email);
 		Task<GuestModel> GetGuestByIdAsync(int id);
 		Task ChangePasswordAsync(int id, string passwordHash);
+		Task ChangeUserActivityAsync(int id);
 	}
 }

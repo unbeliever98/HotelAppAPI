@@ -124,5 +124,10 @@ namespace DataAccessLibrary.Data
 		{
 			await _db.SaveDataAsync("dbo.SpGuests_UpdatePassword", new { passwordHash, id }, connectionStringName, true);
 		}
+
+		public async Task ChangeUserActivityAsync(int id)
+		{
+			await _db.SaveDataAsync("dbo.spGuests_ChangeActivity", new { id }, connectionStringName, true);
+		}
 	}
 }

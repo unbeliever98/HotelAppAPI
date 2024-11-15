@@ -24,8 +24,7 @@ namespace hotelappi.Controllers
 			_config = config;
 		}
 
-		[HttpPost]
-		[Route("register")]
+		[HttpPost("register")]
 		public async Task <ActionResult> Register([FromBody]GuestDTO guest)
 		{
 			var allEmails=await _db.GetAllGuestEmailsAsync();
@@ -34,7 +33,12 @@ namespace hotelappi.Controllers
 			{
 				return BadRequest("Email already exists!");
 			}
-			
+
+			if (guest.Password != guest.ConfirmPassword)
+			{
+				return BadRequest("Password and Confirm Password do not match!");
+			}
+
 			var hashedPassword=BCrypt.Net.BCrypt.EnhancedHashPassword(guest.Password, 13);
 
 			try
@@ -48,8 +52,7 @@ namespace hotelappi.Controllers
 			}
 		}
 
-		[HttpPost]
-		[Route("login")]
+		[HttpPost("login")]
 		public async Task<ActionResult> Login([FromBody] LoginDTO login)
 		{
 			var user = await _db.GetGuestInfoAsync(login.Email);
@@ -64,6 +67,15 @@ namespace hotelappi.Controllers
 			if (!isPasswordValid)
 			{
 				return Unauthorized("Invalid email or password.");
+			}
+
+			if (user.IsActive == 0)
+			{
+				return Ok(new
+				{
+					Message = "Your account is deactivated. Do you want to restore it?",
+					CanRestore = true
+				});
 			}
 
 			var claims = new[]
@@ -87,8 +99,7 @@ namespace hotelappi.Controllers
 			return Ok(new {Token=tokenValue, User=user.Email, user.FirstName, user.LastName});
 		}
 		[Authorize]
-		[HttpPut]
-		[Route("update-password")]
+		[HttpPut("update-password")]
 		public async Task <ActionResult> UpdatePassword([FromBody] UpdatePasswordModel pwModel)
 		{
 			if (pwModel == null || string.IsNullOrEmpty(pwModel.CurrentPassword) || string.IsNullOrEmpty(pwModel.NewPassword))
@@ -111,7 +122,12 @@ namespace hotelappi.Controllers
 			bool isPasswordValid = BCrypt.Net.BCrypt.EnhancedVerify(pwModel.CurrentPassword, user.PasswordHash);
 			if (!isPasswordValid)
 			{
-				return Unauthorized("Invalid current password.");
+				return BadRequest("Invalid current password.");
+			}
+
+			if (pwModel.CurrentPassword != pwModel.NewPassword)
+			{
+				return BadRequest("New password and confirmed new password don't match!");
 			}
 
 			user.PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(pwModel.NewPassword);
@@ -120,5 +136,57 @@ namespace hotelappi.Controllers
 			return Ok("Password changed successfully.");
 
 		}
-    }
+
+		[Authorize]
+		[HttpPut("deactivate-account")]
+		public async Task <ActionResult> DeactivateUser()
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var user = await _db.GetGuestByIdAsync(userIdInt);
+
+			if (user == null)
+			{
+				return NotFound("User not found.");
+			}
+
+			if (user.IsActive == 0)
+			{
+				return BadRequest("Account is already inactive.");
+			}
+
+			await _db.ChangeUserActivityAsync(userIdInt);
+			return Ok("Account deactivated succesffuly");
+		}
+
+		[Authorize]
+		[HttpPut("restore-account")]
+		public async Task<ActionResult> RestoreUser()
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var user = await _db.GetGuestByIdAsync(userIdInt);
+
+			if (user == null)
+			{
+				return NotFound("User not found.");
+			}
+
+			if (user.IsActive == 1)
+			{
+				return BadRequest("Account is already active.");
+			}
+
+			await _db.ChangeUserActivityAsync(userIdInt);
+			return Ok("Account restored succesffuly");
+		}
+	}
 }

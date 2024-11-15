@@ -78,6 +78,16 @@
   },
   {
     "ContainingType": "hotelappi.Controllers.UsersController",
+    "Method": "DeactivateUser",
+    "RelativePath": "api/users/deactivate-account",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "hotelappi.Controllers.UsersController",
     "Method": "Login",
     "RelativePath": "api/users/login",
     "HttpMethod": "POST",
@@ -106,6 +116,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "hotelappi.Controllers.UsersController",
+    "Method": "RestoreUser",
+    "RelativePath": "api/users/restore-account",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
