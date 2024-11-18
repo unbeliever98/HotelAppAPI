@@ -27,11 +27,12 @@ namespace DataAccessLibrary.Data
 											   true);
 		}
 
-		public async Task BookGuestAsync(string firstName, string lastName, DateTime startDate, DateTime endDate, int roomTypeId)
+
+		public async Task BookGuestAsync(int id, DateTime startDate, DateTime endDate, int roomTypeId)
 		{
 
-			GuestModel guest = (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_Register",
-													   new { firstName, lastName },
+			GuestModel guest = (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_GetGuestById",
+													   new { id },
 													   connectionStringName,
 													   true)).First();
 
@@ -128,6 +129,11 @@ namespace DataAccessLibrary.Data
 		public async Task ChangeUserActivityAsync(int id)
 		{
 			await _db.SaveDataAsync("dbo.spGuests_ChangeActivity", new { id }, connectionStringName, true);
+		}
+
+		public async Task<RoomFullModel> GetFullRoomInfo(int id, DateTime startDate, DateTime endDate)
+		{
+			return (await _db.LoadDataAsync<RoomFullModel, dynamic>("dbo.spRoomTypes_GetByIdWithFeatures", new { id, startDate, endDate }, connectionStringName, true)).FirstOrDefault();
 		}
 	}
 }

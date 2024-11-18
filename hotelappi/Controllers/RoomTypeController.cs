@@ -1,6 +1,7 @@
 ﻿using DataAccessLibrary.Data;
 using DataAccessLibrary.Databases;
 using DataAccessLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementApp.Web.Controllers
@@ -16,24 +17,61 @@ namespace HotelManagementApp.Web.Controllers
 			_db = db;
 		}
 
-		[HttpGet("{id}")]
-		public async Task<ActionResult<RoomTypeModel>> GetRoomTypeById(int id)
+		[Authorize]
+		[HttpPost("{id}")]
+		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel requestModel)
 		{
 			try
 			{
-				var roomType = await _db.GetRoomTypeByIdAsync(id);
-				if (roomType == null)
+				var fullRoomInfo = await _db.GetFullRoomInfo(id, requestModel.startDate, requestModel.endDate);
+				if (fullRoomInfo == null)
 				{
 					return NotFound();
 				}
 
-				return Ok(roomType);
-			}catch (Exception ex)
+				var staticFeatures = new Dictionary<string, bool>
+				{
+					{ "SeaView", fullRoomInfo.SeaView },
+					{ "AirConditioning", fullRoomInfo.AirConditioning },
+					{ "FreeWifi", fullRoomInfo.FreeWifi },
+					{ "RoomService", fullRoomInfo.RoomService },
+					{ "FlatScreenTv", fullRoomInfo.FlatScreenTv },
+					{ "MiniFridge", fullRoomInfo.MiniFridge },
+					{ "DailyHousekeeping", fullRoomInfo.DailyHousekeeping },
+					{ "CoffeeMaker", fullRoomInfo.CoffeeMaker },
+					{ "SafetyBox", fullRoomInfo.SafetyBox }
+				};
+
+				var dynamicFeatures = new Dictionary<string, bool>
+				{
+					{ "HasBreakfast", fullRoomInfo.HasBreakfast },
+					{ "HasSauna", fullRoomInfo.HasSauna },
+					{ "HasGym", fullRoomInfo.HasGym },
+					{ "HasLaundryService", fullRoomInfo.HasLaundryService },
+					{ "HasParking", fullRoomInfo.HasParking }
+				};
+
+				return Ok(new
+				{
+					fullRoomInfo.Id,
+					fullRoomInfo.Description,
+					fullRoomInfo.Price,
+					fullRoomInfo.Image,
+					fullRoomInfo.Rating,
+					fullRoomInfo.MaxOccupancy,
+					fullRoomInfo.FullDescription,
+					fullRoomInfo.RoomId,
+					StaticFeatures = staticFeatures,
+					DynamicFeatures = dynamicFeatures
+				});
+			}
+			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
-			
 		}
+
+
 		[HttpGet("available")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
 		{
@@ -55,7 +93,7 @@ namespace HotelManagementApp.Web.Controllers
 			}
 		}
 
-		[HttpGet ("allroomtypes")]
+		[HttpGet("allroomtypes")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAllRoomTypes()
 		{
 			try

@@ -125,7 +125,7 @@ namespace hotelappi.Controllers
 				return BadRequest("Invalid current password.");
 			}
 
-			if (pwModel.CurrentPassword != pwModel.NewPassword)
+			if (pwModel.ConfirmNewPassword != pwModel.NewPassword)
 			{
 				return BadRequest("New password and confirmed new password don't match!");
 			}
@@ -187,6 +187,35 @@ namespace hotelappi.Controllers
 
 			await _db.ChangeUserActivityAsync(userIdInt);
 			return Ok("Account restored succesffuly");
+		}
+
+		[Authorize]
+		[HttpGet("get-user")]
+		public async Task<ActionResult> GetUserFromToken()
+		{
+			var userIdString=User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var user = await _db.GetGuestByIdAsync(userIdInt);
+
+			if (user == null)
+			{
+				return NotFound("User not found.");
+			}
+
+			var userInfo = new
+			{
+				user.FirstName,
+				user.LastName,
+				user.Email,
+				user.IsActive
+			};
+
+			return Ok(userInfo);
 		}
 	}
 }

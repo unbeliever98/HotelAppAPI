@@ -1,9 +1,25 @@
 [
   {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "BookRoom",
+    "RelativePath": "api/bookings/book",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingRequest",
+        "Type": "DataAccessLibrary.Models.BookingRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HotelManagementApp.Web.Controllers.RoomTypeController",
     "Method": "GetRoomTypeById",
     "RelativePath": "api/roomtypes/{id}",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -11,11 +27,16 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "requestModel",
+        "Type": "DataAccessLibrary.Models.FullRoomRequestModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DataAccessLibrary.Models.RoomTypeModel",
+        "Type": "DataAccessLibrary.Models.RoomFullModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -88,6 +109,16 @@
   },
   {
     "ContainingType": "hotelappi.Controllers.UsersController",
+    "Method": "GetUserFromToken",
+    "RelativePath": "api/users/get-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "hotelappi.Controllers.UsersController",
     "Method": "Login",
     "RelativePath": "api/users/login",
     "HttpMethod": "POST",
@@ -139,22 +170,6 @@
       {
         "Name": "pwModel",
         "Type": "DataAccessLibrary.Models.UpdatePasswordModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
-    "Method": "BookRoom",
-    "RelativePath": "webapi/bookings/book",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "bookingRequest",
-        "Type": "DataAccessLibrary.Models.BookingRequestModel",
         "IsRequired": true
       }
     ],

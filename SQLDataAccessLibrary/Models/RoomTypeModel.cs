@@ -15,6 +15,7 @@ namespace DataAccessLibrary.Models
         public decimal Rating { get; set; }
         public string Image { get; set; }
         public string FullDescription { get; set; }
+        public int MaxOccupancy { get; set; }
 
     }
 }

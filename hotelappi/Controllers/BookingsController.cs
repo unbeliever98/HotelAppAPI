@@ -1,11 +1,12 @@
 ﻿using DataAccessLibrary.Data;
 using DataAccessLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 
 namespace HotelManagementApp.Web.Controllers
 {
-	[Route("webapi/bookings")]
+	[Route("api/bookings")]
 	[ApiController]
 	public class BookingsController : ControllerBase
 	{
@@ -16,15 +17,23 @@ namespace HotelManagementApp.Web.Controllers
 			_db = db;			
         }
 
+		[Authorize]
         [HttpPost("book")]
 		public async Task <ActionResult> BookRoom([FromBody] BookingRequestModel bookingRequest)
 		{
-            try
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
 			{
-				await _db.BookGuestAsync(bookingRequest.FirstName, bookingRequest.LastName, bookingRequest.StartDate,
+				return Unauthorized("Invalid token.");
+			}
+
+			try
+			{
+				await _db.BookGuestAsync(userIdInt, bookingRequest.StartDate,
 					bookingRequest.EndDate, bookingRequest.RoomTypeId);
 
-				return Ok(new { message = "Booking successful" });
+				return Ok(new { message = "Booking successful"});
 			}
 			catch (Exception ex)
 			{
