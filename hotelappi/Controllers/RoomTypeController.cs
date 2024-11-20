@@ -17,6 +17,8 @@ namespace HotelManagementApp.Web.Controllers
 			_db = db;
 		}
 
+
+		//needs refactoring
 		[Authorize]
 		[HttpPost("{id}")]
 		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel requestModel)
@@ -42,27 +44,21 @@ namespace HotelManagementApp.Web.Controllers
 					{ "SafetyBox", fullRoomInfo.SafetyBox }
 				};
 
-				var dynamicFeatures = new Dictionary<string, bool>
-				{
-					{ "HasBreakfast", fullRoomInfo.HasBreakfast },
-					{ "HasSauna", fullRoomInfo.HasSauna },
-					{ "HasGym", fullRoomInfo.HasGym },
-					{ "HasLaundryService", fullRoomInfo.HasLaundryService },
-					{ "HasParking", fullRoomInfo.HasParking }
-				};
+
 
 				return Ok(new
 				{
 					fullRoomInfo.Id,
 					fullRoomInfo.Description,
+					fullRoomInfo.StartDate,
+					fullRoomInfo.EndDate,
 					fullRoomInfo.Price,
 					fullRoomInfo.Image,
 					fullRoomInfo.Rating,
 					fullRoomInfo.MaxOccupancy,
 					fullRoomInfo.FullDescription,
 					fullRoomInfo.RoomId,
-					StaticFeatures = staticFeatures,
-					DynamicFeatures = dynamicFeatures
+					StaticFeatures = staticFeatures
 				});
 			}
 			catch (Exception ex)

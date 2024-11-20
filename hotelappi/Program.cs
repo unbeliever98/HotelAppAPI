@@ -41,6 +41,16 @@ namespace hotelappi
 					ValidAudience = builder.Configuration["Jwt:Audience"],
 					IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 				};
+
+				options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
+				{
+					OnAuthenticationFailed = context =>
+					{
+						context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+						context.Response.ContentType = "application/json";
+						return context.Response.WriteAsync("{\"message\": \"Invalid token.\"}");
+					}
+				};
 			});
 
 			builder.Services.AddScoped<ISqlDataAccessAsync, SqlDataAccessAsync>();

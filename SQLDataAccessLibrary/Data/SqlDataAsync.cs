@@ -28,7 +28,7 @@ namespace DataAccessLibrary.Data
 		}
 
 
-		public async Task BookGuestAsync(int id, DateTime startDate, DateTime endDate, int roomTypeId)
+		public async Task BookGuestAsync(int id, DateTime startDate, DateTime endDate, int roomTypeId, int totalCost, int numOfPeople)
 		{
 
 			GuestModel guest = (await _db.LoadDataAsync<GuestModel, dynamic>("dbo.spGuests_GetGuestById",
@@ -54,7 +54,8 @@ namespace DataAccessLibrary.Data
 							guestId = guest.Id,
 							startDate,
 							endDate,
-							totalCost = timeStaying.Days * roomType.Price
+							totalCost,
+							numOfPeople
 						},
 						connectionStringName,
 						true);
@@ -134,6 +135,27 @@ namespace DataAccessLibrary.Data
 		public async Task<RoomFullModel> GetFullRoomInfo(int id, DateTime startDate, DateTime endDate)
 		{
 			return (await _db.LoadDataAsync<RoomFullModel, dynamic>("dbo.spRoomTypes_GetByIdWithFeatures", new { id, startDate, endDate }, connectionStringName, true)).FirstOrDefault();
+		}
+
+		public async Task<Dictionary<int, int>> GetFeaturePrices(List<int> featureIds)
+		{
+			var featureIdString=string.Join(",",featureIds);
+
+			return (await _db.LoadDataAsync <KeyValuePair<int, int>, dynamic>("dbo.spRoomFeatures_GetPriceById", new {ids=featureIdString}, connectionStringName, true)).ToDictionary(x=> x.Key, x=>x.Value);
+		}
+
+		public async Task<int> GetRoomTypePrice(int id)
+		{
+			return (await _db.LoadDataAsync<int, dynamic>("dbo.spRoomType_GetPrice", new { id }, connectionStringName, true)).FirstOrDefault();
+		}
+
+		public async Task<string> GetRoomNum(int roomTypeId, DateTime startDate, DateTime endDate)
+		{
+			RoomModel availableRoom = (await _db.LoadDataAsync<RoomModel, dynamic>("dbo.spRooms_GetAvailableRooms",
+																	 new { startDate, endDate, roomTypeId },
+																	 connectionStringName,
+																	 true)).First();
+			return availableRoom.RoomNum;
 		}
 	}
 }

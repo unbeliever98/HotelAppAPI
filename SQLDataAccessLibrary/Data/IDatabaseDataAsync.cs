@@ -4,7 +4,7 @@ namespace DataAccessLibrary.Data
 {
 	public interface IDatabaseDataAsync
 	{
-		Task BookGuestAsync(int id, DateTime startDate, DateTime endDate, int roomTypeId);
+		Task BookGuestAsync(int id, DateTime startDate, DateTime endDate, int roomTypeId, int totalCost, int numOfPeople);
 		Task CheckInAsync(int bookingId);
 		Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate);
 		Task<RoomTypeModel> GetRoomTypeByIdAsync(int id);
@@ -17,5 +17,8 @@ namespace DataAccessLibrary.Data
 		Task ChangePasswordAsync(int id, string passwordHash);
 		Task ChangeUserActivityAsync(int id);
 		Task<RoomFullModel> GetFullRoomInfo(int id, DateTime startDate, DateTime endDate);
+		Task<Dictionary<int, int>> GetFeaturePrices(List<int> featureIds);
+		Task<int> GetRoomTypePrice(int id);
+		Task<string> GetRoomNum(int id, DateTime startDate, DateTime endDate);
 	}
 }

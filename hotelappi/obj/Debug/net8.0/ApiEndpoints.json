@@ -99,6 +99,16 @@
   },
   {
     "ContainingType": "hotelappi.Controllers.UsersController",
+    "Method": "TokenValid",
+    "RelativePath": "api/users/check-token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "hotelappi.Controllers.UsersController",
     "Method": "DeactivateUser",
     "RelativePath": "api/users/deactivate-account",
     "HttpMethod": "PUT",

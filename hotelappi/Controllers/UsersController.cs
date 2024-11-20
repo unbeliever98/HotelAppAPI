@@ -92,7 +92,7 @@ namespace hotelappi.Controllers
 			var token = new JwtSecurityToken(_config["Jwt:Issuer"],
 									_config["Jwt:Audience"],
 									claims,
-									expires: DateTime.UtcNow.AddMinutes(10),
+									expires: DateTime.UtcNow.AddMinutes(30),
 									signingCredentials: signIn);
 
 			string tokenValue=new JwtSecurityTokenHandler().WriteToken(token);
@@ -216,6 +216,19 @@ namespace hotelappi.Controllers
 			};
 
 			return Ok(userInfo);
+		}
+		[Authorize]
+		[HttpGet("check-token")]
+		public async Task<ActionResult> TokenValid()
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString))
+			{
+				return Unauthorized("Invalid token.");
+			}
+			else return Ok(new { message = "Token is valid" });
+			
 		}
 	}
 }
