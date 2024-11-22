@@ -25,7 +25,7 @@ namespace HotelManagementApp.Web.Controllers
 		{
 			try
 			{
-				var fullRoomInfo = await _db.GetFullRoomInfo(id, requestModel.startDate, requestModel.endDate);
+				var fullRoomInfo = await _db.GetFullRoomInfoAsync(id, requestModel.startDate, requestModel.endDate);
 				if (fullRoomInfo == null)
 				{
 					return NotFound();

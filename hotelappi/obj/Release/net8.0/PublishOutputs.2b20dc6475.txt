@@ -34,6 +34,7 @@ C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTm
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\ProfanityFilter.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\System.Data.SQLite.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\User\source\repos\HotelManagementApp\hotelappi\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll

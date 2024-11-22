@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "PostReview",
+    "RelativePath": "api/bookings/post-review",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DataAccessLibrary.Models.ReviewRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HotelManagementApp.Web.Controllers.RoomTypeController",
     "Method": "GetRoomTypeById",
     "RelativePath": "api/roomtypes/{id}",

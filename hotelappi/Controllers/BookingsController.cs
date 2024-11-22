@@ -4,6 +4,8 @@ using DataAccessLibrary.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
+using ProfanityFilter;
+
 
 namespace HotelManagementApp.Web.Controllers
 {
@@ -29,10 +31,10 @@ namespace HotelManagementApp.Web.Controllers
 				return Unauthorized("Invalid token.");
 			}
 
-			var featurePrices = await _db.GetFeaturePrices(bookingRequest.SelectedFeatures);
+			var featurePrices = await _db.GetFeaturePricesAsync(bookingRequest.SelectedFeatures);
 			var daysStaying = bookingRequest.EndDate.Subtract(bookingRequest.StartDate).Days;
-			var basePrice = await _db.GetRoomTypePrice(bookingRequest.Id);
-			int totalPrice = basePrice*daysStaying + (bookingRequest.NumOfPeople > 1 ? 30 * (bookingRequest.NumOfPeople-1)*daysStaying : 0);
+			var basePrice = await _db.GetRoomTypePriceAsync(bookingRequest.Id);
+			int totalPrice = basePrice * daysStaying + (bookingRequest.NumOfPeople > 1 ? 30 * (bookingRequest.NumOfPeople-1) * daysStaying : 0);
 
 			foreach (var featurePriceId in featurePrices)
 			{
@@ -45,7 +47,7 @@ namespace HotelManagementApp.Web.Controllers
 						totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople * daysStaying;
 						break;
 					case 3:
-						totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople*daysStaying;
+						totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople * daysStaying;
 						break;
 					case 4:
 						totalPrice += featurePriceId.Value;
@@ -57,14 +59,14 @@ namespace HotelManagementApp.Web.Controllers
 			}
 
 			var roomType= await _db.GetRoomTypeByIdAsync(bookingRequest.Id);
-			var roomNum = (await _db.GetRoomNum(bookingRequest.Id,bookingRequest.StartDate, bookingRequest.EndDate));
+			var roomNum = (await _db.GetRoomNumAsync(bookingRequest.Id,bookingRequest.StartDate, bookingRequest.EndDate));
 
 			try
 			{
 				await _db.BookGuestAsync(userIdInt, bookingRequest.StartDate,
 					bookingRequest.EndDate, bookingRequest.Id, totalPrice, bookingRequest.NumOfPeople);
 
-				return Ok(new { roomType.Description,bookingRequest.StartDate,bookingRequest.EndDate, roomNum, totalPrice});
+				return Ok(new { roomType.Description,bookingRequest.StartDate,bookingRequest.EndDate, roomNum, totalPrice, featurePrices});
 			}
 			catch (Exception ex)
 			{
@@ -73,6 +75,36 @@ namespace HotelManagementApp.Web.Controllers
 
 		}
 
+		[Authorize]
+		[HttpPost("post-review")]
+		public async Task<ActionResult> PostReview(ReviewRequestModel model)
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
 
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var filter = new ProfanityFilter.ProfanityFilter();
+			var censoredComment = filter.CensorString(model.Comment);
+
+			var user = await _db.GetGuestByIdAsync(userIdInt);
+			var bookingId= await _db.GetBookingIdAsync(userIdInt);
+
+			var reviewExists = await _db.CheckIfReviewForBookingExistsAsync(bookingId);
+
+			if (reviewExists == false)
+			{
+				await _db.PostReviewAsync(userIdInt, censoredComment, model.Rating);
+
+				return Ok(new { censoredComment, model.Rating, user.FirstName, DateTime.Now });
+			}else
+			{
+				return NotFound("Review already posted!");
+			}
+
+			
+		}
 	}
 }
