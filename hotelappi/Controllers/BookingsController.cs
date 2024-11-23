@@ -31,42 +31,40 @@ namespace HotelManagementApp.Web.Controllers
 				return Unauthorized("Invalid token.");
 			}
 
+			var featureIdInts=new List<int>();
+
 			var featurePrices = await _db.GetFeaturePricesAsync(bookingRequest.SelectedFeatures);
 			var daysStaying = bookingRequest.EndDate.Subtract(bookingRequest.StartDate).Days;
 			var basePrice = await _db.GetRoomTypePriceAsync(bookingRequest.Id);
-			int totalPrice = basePrice * daysStaying + (bookingRequest.NumOfPeople > 1 ? 30 * (bookingRequest.NumOfPeople-1) * daysStaying : 0);
+			int totalPrice = basePrice * daysStaying + (bookingRequest.NumOfPeople > 1 ? 30 * (bookingRequest.NumOfPeople - 1) * daysStaying : 0);
 
 			foreach (var featurePriceId in featurePrices)
 			{
-				switch (featurePriceId.Key)
+				if (featurePriceId.Key is 1 or 2 or 3)
 				{
-					case 1:
-						totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople * daysStaying;
-						break;
-					case 2:
-						totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople * daysStaying;
-						break;
-					case 3:
-						totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople * daysStaying;
-						break;
-					case 4:
-						totalPrice += featurePriceId.Value;
-						break;
-					case 5:
-						totalPrice += featurePriceId.Value;
-						break;
+					totalPrice += featurePriceId.Value * bookingRequest.NumOfPeople * daysStaying;
 				}
+				else if (featurePriceId.Key is 4 or 5)
+				{
+					totalPrice += featurePriceId.Value;
+				}
+				featureIdInts.Add(featurePriceId.Key);
 			}
 
-			var roomType= await _db.GetRoomTypeByIdAsync(bookingRequest.Id);
-			var roomNum = (await _db.GetRoomNumAsync(bookingRequest.Id,bookingRequest.StartDate, bookingRequest.EndDate));
+			
 
 			try
 			{
 				await _db.BookGuestAsync(userIdInt, bookingRequest.StartDate,
 					bookingRequest.EndDate, bookingRequest.Id, totalPrice, bookingRequest.NumOfPeople);
 
-				return Ok(new { roomType.Description,bookingRequest.StartDate,bookingRequest.EndDate, roomNum, totalPrice, featurePrices});
+				int bookingId = await _db.GetBookingIdAsync(userIdInt);
+
+				if (featureIdInts.Count>1)
+				{
+					await _db.InsertFeaturesIntoBooking(bookingId, featureIdInts); 
+				}
+				return Ok(new { bookingId });
 			}
 			catch (Exception ex)
 			{
@@ -104,7 +102,34 @@ namespace HotelManagementApp.Web.Controllers
 				return NotFound("Review already posted!");
 			}
 
-			
+		}
+
+		[Authorize]
+		[HttpGet("{id}")]
+		public async Task<ActionResult> GetReceipt(int id)
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var result=await _db.GetFullBookingInfo(id, userIdInt);
+
+			var daysStaying=result.EndDate.Subtract(result.StartDate).Days;
+			var pricePerNight = result.TotalPrice / daysStaying;
+
+			bool isExpired = DateTime.Now.Date > result.EndDate ? true : false;
+
+			if (result != null)
+			{
+				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired});
+			}
+			else
+			{
+				return NotFound("This reciept does not belong you or doesn't exist.");
+			}
 		}
 	}
 }

@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "GetReceipt",
+    "RelativePath": "api/bookings/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
     "Method": "BookRoom",
     "RelativePath": "api/bookings/book",
     "HttpMethod": "POST",

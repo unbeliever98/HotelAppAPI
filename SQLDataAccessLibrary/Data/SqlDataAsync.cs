@@ -180,5 +180,17 @@ namespace DataAccessLibrary.Data
 		{
 			return (await _db.LoadDataAsync<int, dynamic>("dbo.spBookings_GetBookingByGuestId", new { guestId }, connectionStringName, true)).FirstOrDefault();
 		}
+
+		public async Task InsertFeaturesIntoBooking(int bookingId, List<int> featureIds)
+		{
+			var featureIdString = string.Join(",", featureIds);
+
+			await _db.SaveDataAsync("dbo.spBookingFeatures_InsertBookingFeature", new {bookingId, featureId=featureIdString},connectionStringName, true);
+		}
+		
+		public async Task <BookingFullModel> GetFullBookingInfo(int bookingId, int guestId)
+		{
+			return (await _db.LoadDataAsync<BookingFullModel, dynamic>("dbo.spBookings_GetFullBookingInfo", new { bookingId, guestId }, connectionStringName, true)).FirstOrDefault();
+		}
 	}
 }

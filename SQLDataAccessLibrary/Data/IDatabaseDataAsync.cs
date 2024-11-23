@@ -23,5 +23,7 @@ namespace DataAccessLibrary.Data
 		Task PostReviewAsync(int guestId, string comment, int rating);
 		Task<int> GetBookingIdAsync(int guestId);
 		Task<bool> CheckIfReviewForBookingExistsAsync(int id);
+		Task InsertFeaturesIntoBooking(int bookingId, List<int> featureIds);
+		Task<BookingFullModel> GetFullBookingInfo(int bookingId, int guestId);
 	}
 }
