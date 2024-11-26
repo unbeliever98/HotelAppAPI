@@ -31,14 +31,14 @@ namespace DataAccessLibrary.Databases
 			}
 		}
 
-		public async Task SaveDataAsync<T>(string sqlStatement, T parameters, string connectionStringName, bool isStoredProcedure = false)
+		public async Task<int> SaveDataAsync<T>(string sqlStatement, T parameters, string connectionStringName, bool isStoredProcedure = false)
 		{
 			string connectionString = _config.GetConnectionString(connectionStringName);
 			CommandType commandType = isStoredProcedure ? CommandType.StoredProcedure : CommandType.Text;
 
 			using (IDbConnection connection = new SqlConnection(connectionString))
 			{
-				await connection.ExecuteAsync(sqlStatement, parameters, commandType: commandType);
+				return await connection.ExecuteAsync(sqlStatement, parameters, commandType: commandType);
 			}
 		}
 	}

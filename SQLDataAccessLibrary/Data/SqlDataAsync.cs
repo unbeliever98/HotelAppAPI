@@ -192,5 +192,16 @@ namespace DataAccessLibrary.Data
 		{
 			return (await _db.LoadDataAsync<BookingFullModel, dynamic>("dbo.spBookings_GetFullBookingInfo", new { bookingId, guestId }, connectionStringName, true)).FirstOrDefault();
 		}
+
+		public async Task<int> DeleteBooking(int bookingId, int guestId)
+		{
+			return await _db.SaveDataAsync("dbo.spBookings_DeleteBooking", new { bookingId, guestId }, connectionStringName, true);
+		}
+
+		public async Task<List<BookingFullModel>> GetPartialBookingInfo(int guestId)
+		{
+			return await _db.LoadDataAsync<BookingFullModel, dynamic>("dbo.spBookings_GetPartialBookingInfo", new { guestId }, connectionStringName, true);
+		}
+
 	}
 }

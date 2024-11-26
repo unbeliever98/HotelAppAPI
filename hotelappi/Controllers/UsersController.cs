@@ -69,17 +69,8 @@ namespace hotelappi.Controllers
 				return Unauthorized("Invalid email or password.");
 			}
 
-			if (user.IsActive == 0)
-			{
-				return Ok(new
-				{
-					Message = "Your account is deactivated. Do you want to restore it?",
-					CanRestore = true
-				});
-			}
-
 			var claims = new[]
-			{
+{
 				new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 				new Claim("Email", user.Email.ToString()),
@@ -95,8 +86,21 @@ namespace hotelappi.Controllers
 									expires: DateTime.UtcNow.AddMinutes(30),
 									signingCredentials: signIn);
 
-			string tokenValue=new JwtSecurityTokenHandler().WriteToken(token);
-			return Ok(new {Token=tokenValue, User=user.Email, user.FirstName, user.LastName});
+			string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+
+			if (user.IsActive == false)
+			{
+				return Ok(new
+				{
+					Message = "Your account is deactivated. Do you want to restore it?",
+					user.IsActive,
+					Token=tokenValue,
+					CanRestore = true
+				});
+			}
+
+
+			return Ok(new {Token=tokenValue, User=user.Email, user.FirstName, user.LastName, user.IsActive});
 		}
 		[Authorize]
 		[HttpPut("update-password")]
@@ -154,7 +158,7 @@ namespace hotelappi.Controllers
 				return NotFound("User not found.");
 			}
 
-			if (user.IsActive == 0)
+			if (user.IsActive == false)
 			{
 				return BadRequest("Account is already inactive.");
 			}
@@ -180,13 +184,14 @@ namespace hotelappi.Controllers
 				return NotFound("User not found.");
 			}
 
-			if (user.IsActive == 1)
+			if (user.IsActive == true)
 			{
 				return BadRequest("Account is already active.");
 			}
 
 			await _db.ChangeUserActivityAsync(userIdInt);
-			return Ok("Account restored succesffuly");
+			user = await _db.GetGuestByIdAsync(userIdInt);
+			return Ok(new {message= "Account restored succesffuly",firstName =user.FirstName, lastName=user.LastName, email=user.Email, user.IsActive});
 		}
 
 		[Authorize]

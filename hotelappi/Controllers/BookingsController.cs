@@ -117,18 +117,78 @@ namespace HotelManagementApp.Web.Controllers
 
 			var result=await _db.GetFullBookingInfo(id, userIdInt);
 
-			var daysStaying=result.EndDate.Subtract(result.StartDate).Days;
-			var pricePerNight = result.TotalPrice / daysStaying;
-
-			bool isExpired = DateTime.Now.Date > result.EndDate ? true : false;
-
 			if (result != null)
 			{
+				var daysStaying = result.EndDate.Subtract(result.StartDate).Days;
+				var pricePerNight = result.TotalPrice / daysStaying;
+
+				bool isExpired = DateTime.Now.Date > result.EndDate;
+
 				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired});
 			}
 			else
 			{
 				return NotFound("This reciept does not belong you or doesn't exist.");
+			}
+
+		}
+
+		[Authorize]
+		[HttpDelete("delete-booking")]
+		public async Task<ActionResult> DeleteBooking(int bookingId)
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var result = await _db.DeleteBooking(bookingId, userIdInt);
+
+			if (result > 0)
+			{
+				return Ok("Booking deleted successfully!");
+			}
+			else
+			{
+				return NotFound("No booking found or you are not authorized to delete it!");
+			}
+		}
+
+		[Authorize]
+		[HttpGet("search-bookings")]
+		public async Task<ActionResult> GetUserBookings()
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var result= await _db.GetPartialBookingInfo(userIdInt);
+
+			if (result.Count > 0)
+			{
+				var bookings = result.Select(booking => new
+				{
+					bookingId = booking.Id,
+					startDate = booking.StartDate,
+					endDate = booking.EndDate,
+					numOfPeople = booking.NumOfPeople,
+					totalPrice = booking.TotalPrice,
+					roomTitle = booking.Title,
+					roomDescription = booking.Description,
+					image = booking.Image,
+					isExpired = DateTime.Now.Date > booking.EndDate,
+				}).ToList();
+
+				return Ok(new { bookings });
+			}
+			else
+			{
+				return NotFound("You have no bookings yet!");
 			}
 		}
 	}

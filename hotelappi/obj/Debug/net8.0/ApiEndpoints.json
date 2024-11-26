@@ -33,6 +33,22 @@
   },
   {
     "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "DeleteBooking",
+    "RelativePath": "api/bookings/delete-booking",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
     "Method": "PostReview",
     "RelativePath": "api/bookings/post-review",
     "HttpMethod": "POST",
@@ -45,6 +61,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "GetUserBookings",
+    "RelativePath": "api/bookings/search-bookings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
