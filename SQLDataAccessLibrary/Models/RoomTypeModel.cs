@@ -12,10 +12,10 @@ namespace DataAccessLibrary.Models
         public string Title { get; set; }
 		public string Description { get; set; }
         public decimal Price { get; set; }
-        public decimal Rating { get; set; }
         public string Image { get; set; }
         public string FullDescription { get; set; }
         public int MaxOccupancy { get; set; }
+        public int AvailableRoomsCount { get; set; }
 
     }
 }

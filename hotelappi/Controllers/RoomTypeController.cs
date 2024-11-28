@@ -21,11 +21,11 @@ namespace HotelManagementApp.Web.Controllers
 		//needs refactoring
 		[Authorize]
 		[HttpPost("{id}")]
-		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel requestModel)
+		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel model)
 		{
 			try
 			{
-				var fullRoomInfo = await _db.GetFullRoomInfoAsync(id, requestModel.startDate, requestModel.endDate);
+				var fullRoomInfo = await _db.GetFullRoomInfoAsync(id, model.startDate, model.endDate);
 				if (fullRoomInfo == null)
 				{
 					return NotFound();
@@ -45,6 +45,7 @@ namespace HotelManagementApp.Web.Controllers
 				};
 
 
+				var reviews = await _db.GetAllUserReviews(fullRoomInfo.Id);
 
 				return Ok(new
 				{
@@ -54,11 +55,11 @@ namespace HotelManagementApp.Web.Controllers
 					fullRoomInfo.EndDate,
 					fullRoomInfo.Price,
 					fullRoomInfo.Image,
-					fullRoomInfo.Rating,
 					fullRoomInfo.MaxOccupancy,
 					fullRoomInfo.FullDescription,
 					fullRoomInfo.RoomId,
-					StaticFeatures = staticFeatures
+					StaticFeatures = staticFeatures,
+					reviews
 				});
 			}
 			catch (Exception ex)
@@ -67,6 +68,25 @@ namespace HotelManagementApp.Web.Controllers
 			}
 		}
 
+		//TODO
+		//[HttpPost("filter")]
+		//public async Task<ActionResult<List<RoomFullModel>>> GetAllRoomTypesById(int id, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+		//{
+		//	try
+		//	{
+		//		var allRooms = await _db.GetAllTypesById(id, startDate, endDate);
+		//		if (allRooms == null)
+		//		{
+		//			return NotFound();
+		//		}
+				
+
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		return BadRequest(ex.Message);
+		//	}
+		//}
 
 		[HttpGet("available")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)

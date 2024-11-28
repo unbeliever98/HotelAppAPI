@@ -87,7 +87,7 @@
         "IsRequired": true
       },
       {
-        "Name": "requestModel",
+        "Name": "model",
         "Type": "DataAccessLibrary.Models.FullRoomRequestModel",
         "IsRequired": true
       }

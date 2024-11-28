@@ -158,27 +158,30 @@ namespace DataAccessLibrary.Data
 			return availableRoom.RoomNum;
 		}
 
-		public async Task PostReviewAsync(int guestId, string comment, int rating)
-		{
-			var id = (await _db.LoadDataAsync<int, dynamic>("dbo.spBookings_GetBookingByGuestId", new { guestId }, connectionStringName, true)).FirstOrDefault();
+		public async Task PostReviewAsync(int bookingId, string comment, int rating)
+		{ 
+			await _db.SaveDataAsync("dbo.spReviews_InsertReview", new {bookingId, comment, rating}, connectionStringName, true);
+		}
 
-			await _db.SaveDataAsync("dbo.spReviews_InsertReview", new {id, comment, rating}, connectionStringName, true);
+		public async Task<List<ReviewsFullModel>> GetAllUserReviews(int roomTypeId)
+		{
+			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("dbo.spReviews_GetUserReviews", new { roomTypeId }, connectionStringName, true);
 		}
 
 		public async Task<bool> CheckIfReviewForBookingExistsAsync(int bookingId)
 		{
-			var results = (await _db.LoadDataAsync<int, dynamic>("dbo.spReviews_CheckForBookingId", new {bookingId}, connectionStringName, true));
+			var results = await _db.LoadDataAsync<int, dynamic>("dbo.spReviews_CheckForBookingId", new {bookingId}, connectionStringName, true);
 
-			if(results.Count == 1)
+			if(results.Count > 0)
 			{
 				return true;
 			}
 			return false;
 		}
 
-		public async Task <int> GetBookingIdAsync(int guestId)
+		public async Task <List<int>> GetBookingIdAsync(int guestId)
 		{
-			return (await _db.LoadDataAsync<int, dynamic>("dbo.spBookings_GetBookingByGuestId", new { guestId }, connectionStringName, true)).FirstOrDefault();
+			return await _db.LoadDataAsync<int, dynamic>("dbo.spBookings_GetBookingByGuestId", new { guestId }, connectionStringName, true);
 		}
 
 		public async Task InsertFeaturesIntoBooking(int bookingId, List<int> featureIds)
@@ -203,5 +206,9 @@ namespace DataAccessLibrary.Data
 			return await _db.LoadDataAsync<BookingFullModel, dynamic>("dbo.spBookings_GetPartialBookingInfo", new { guestId }, connectionStringName, true);
 		}
 
+		public async Task<List<RoomFullModel>> GetAllTypesById (int id, DateTime startDate, DateTime endDate)
+		{
+			return await _db.LoadDataAsync<RoomFullModel, dynamic>("dbo.spRoomTypes_GetAllTypesByIdWithFeatures", new { id, startDate, endDate }, connectionStringName, true);
+		}
 	}
 }

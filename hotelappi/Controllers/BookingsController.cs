@@ -58,7 +58,8 @@ namespace HotelManagementApp.Web.Controllers
 				await _db.BookGuestAsync(userIdInt, bookingRequest.StartDate,
 					bookingRequest.EndDate, bookingRequest.Id, totalPrice, bookingRequest.NumOfPeople);
 
-				int bookingId = await _db.GetBookingIdAsync(userIdInt);
+				var bookingIds = await _db.GetBookingIdAsync(userIdInt);
+				var bookingId = bookingIds.FirstOrDefault();
 
 				if (featureIdInts.Count>1)
 				{
@@ -88,21 +89,21 @@ namespace HotelManagementApp.Web.Controllers
 			var censoredComment = filter.CensorString(model.Comment);
 
 			var user = await _db.GetGuestByIdAsync(userIdInt);
-			var bookingId= await _db.GetBookingIdAsync(userIdInt);
 
-			var reviewExists = await _db.CheckIfReviewForBookingExistsAsync(bookingId);
+			var reviewExists = await _db.CheckIfReviewForBookingExistsAsync(model.BookingId);
 
 			if (reviewExists == false)
 			{
-				await _db.PostReviewAsync(userIdInt, censoredComment, model.Rating);
+				await _db.PostReviewAsync(model.BookingId, censoredComment, model.Rating);
 
-				return Ok(new { censoredComment, model.Rating, user.FirstName, DateTime.Now });
+				return Ok(new { comment=censoredComment, model.Rating, user.FirstName, uploadDate=DateTime.Now });
 			}else
 			{
 				return NotFound("Review already posted!");
 			}
 
 		}
+
 
 		[Authorize]
 		[HttpGet("{id}")]
@@ -115,7 +116,9 @@ namespace HotelManagementApp.Web.Controllers
 				return Unauthorized("Invalid token.");
 			}
 
+			
 			var result=await _db.GetFullBookingInfo(id, userIdInt);
+			var reviewExists = await _db.CheckIfReviewForBookingExistsAsync(id);
 
 			if (result != null)
 			{
@@ -124,7 +127,7 @@ namespace HotelManagementApp.Web.Controllers
 
 				bool isExpired = DateTime.Now.Date > result.EndDate;
 
-				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired});
+				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired, reviewExists});
 			}
 			else
 			{
@@ -171,7 +174,9 @@ namespace HotelManagementApp.Web.Controllers
 
 			if (result.Count > 0)
 			{
-				var bookings = result.Select(booking => new
+				var bookings = result
+					.OrderBy(booking => booking.StartDate)
+					.Select(booking => new
 				{
 					bookingId = booking.Id,
 					startDate = booking.StartDate,
@@ -184,12 +189,14 @@ namespace HotelManagementApp.Web.Controllers
 					isExpired = DateTime.Now.Date > booking.EndDate,
 				}).ToList();
 
-				return Ok(new { bookings });
+				return Ok( bookings);
 			}
 			else
 			{
 				return NotFound("You have no bookings yet!");
 			}
 		}
+
+
 	}
 }

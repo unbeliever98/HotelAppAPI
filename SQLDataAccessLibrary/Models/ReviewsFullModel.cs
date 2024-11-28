@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLibrary.Models
 {
-	public class ReviewRequestModel
+	public class ReviewsFullModel
 	{
         public int BookingId { get; set; }
         public string Comment { get; set; }
         public int Rating { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

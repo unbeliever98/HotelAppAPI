@@ -15,7 +15,6 @@ namespace DataAccessLibrary.Models
 		public DateTime EndDate { get; set; }
 		public int Price { get; set; }
         public string Image { get; set; }
-        public int Rating { get; set; }
         public string FullDescription { get; set; }
         public int RoomId { get; set; }
         public bool SeaView { get; set; }
