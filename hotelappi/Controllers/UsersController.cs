@@ -235,5 +235,6 @@ namespace hotelappi.Controllers
 			else return Ok(new { message = "Token is valid" });
 			
 		}
+
 	}
 }

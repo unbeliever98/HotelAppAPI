@@ -104,6 +104,55 @@ namespace HotelManagementApp.Web.Controllers
 
 		}
 
+		[Authorize]
+		[HttpPut("edit-review")]
+		public async Task<ActionResult> UpdateReview(ReviewRequestModel model)
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var bookings = await _db.GetBookingIdAsync(userIdInt);
+
+			if (bookings.Contains(model.BookingId))
+			{
+				await _db.UpdateReview(model.BookingId, model.Comment, model.Rating);
+				return Ok("Review updated successfully!");
+			}
+			else
+			{
+				return NotFound("This review does not belong to you!");
+			}
+
+			
+		}
+
+		[Authorize]
+		[HttpDelete("delete-review")]
+		public async Task<ActionResult> DeleteReview(int bookingId)
+		{
+			var userIdString = User.FindFirst("UserId")?.Value;
+
+			if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userIdInt))
+			{
+				return Unauthorized("Invalid token.");
+			}
+
+			var bookings = await _db.GetBookingIdAsync(userIdInt);
+
+			if (bookings.Contains(bookingId))
+			{
+				await _db.DeleteReview(bookingId);
+				return Ok("Review deleted successfully!");
+			}
+			else
+			{
+				return NotFound("This review does not belong to you!");
+			}
+		}
 
 		[Authorize]
 		[HttpGet("{id}")]
@@ -119,6 +168,7 @@ namespace HotelManagementApp.Web.Controllers
 			
 			var result=await _db.GetFullBookingInfo(id, userIdInt);
 			var reviewExists = await _db.CheckIfReviewForBookingExistsAsync(id);
+			var review = await _db.GetUserReviewById(id);
 
 			if (result != null)
 			{
@@ -127,7 +177,7 @@ namespace HotelManagementApp.Web.Controllers
 
 				bool isExpired = DateTime.Now.Date > result.EndDate;
 
-				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired, reviewExists});
+				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired, reviewExists, review});
 			}
 			else
 			{

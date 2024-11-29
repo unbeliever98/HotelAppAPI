@@ -23,15 +23,13 @@ namespace HotelManagementApp.Web.Controllers
 		[HttpPost("{id}")]
 		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel model)
 		{
-			try
+			var fullRoomInfo = await _db.GetFullRoomInfoAsync(id, model.StartDate, model.EndDate);
+			if (fullRoomInfo == null)
 			{
-				var fullRoomInfo = await _db.GetFullRoomInfoAsync(id, model.startDate, model.endDate);
-				if (fullRoomInfo == null)
-				{
-					return NotFound();
-				}
+				return NotFound();
+			}
 
-				var staticFeatures = new Dictionary<string, bool>
+			var staticFeatures = new Dictionary<string, bool>
 				{
 					{ "SeaView", fullRoomInfo.SeaView },
 					{ "AirConditioning", fullRoomInfo.AirConditioning },
@@ -45,27 +43,23 @@ namespace HotelManagementApp.Web.Controllers
 				};
 
 
-				var reviews = await _db.GetAllUserReviews(fullRoomInfo.Id);
+			var reviews = await _db.GetAllUserReviews(fullRoomInfo.Id);
 
-				return Ok(new
-				{
-					fullRoomInfo.Id,
-					fullRoomInfo.Description,
-					fullRoomInfo.StartDate,
-					fullRoomInfo.EndDate,
-					fullRoomInfo.Price,
-					fullRoomInfo.Image,
-					fullRoomInfo.MaxOccupancy,
-					fullRoomInfo.FullDescription,
-					fullRoomInfo.RoomId,
-					StaticFeatures = staticFeatures,
-					reviews
-				});
-			}
-			catch (Exception ex)
+
+			return Ok(new
 			{
-				return BadRequest(ex.Message);
-			}
+				fullRoomInfo.Id,
+				fullRoomInfo.Description,
+				fullRoomInfo.StartDate,
+				fullRoomInfo.EndDate,
+				fullRoomInfo.Price,
+				fullRoomInfo.Image,
+				fullRoomInfo.MaxOccupancy,
+				fullRoomInfo.FullDescription,
+				fullRoomInfo.RoomId,
+				StaticFeatures = staticFeatures,
+				reviews = reviews.OrderByDescending(x => x.CreatedAt)
+			});
 		}
 
 		//TODO
@@ -79,7 +73,7 @@ namespace HotelManagementApp.Web.Controllers
 		//		{
 		//			return NotFound();
 		//		}
-				
+
 
 		//	}
 		//	catch (Exception ex)
@@ -91,22 +85,10 @@ namespace HotelManagementApp.Web.Controllers
 		[HttpGet("available")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
 		{
-			try
-			{
-				var availableRoomTypes = await _db.GetAvailableRoomTypesAsync(startDate, endDate);
+			var availableRoomTypes = await _db.GetAvailableRoomTypesAsync(startDate, endDate);
 
-				if (availableRoomTypes == null || !availableRoomTypes.Any())
-				{
-					return NotFound();
-				}
+			return Ok(availableRoomTypes);
 
-				return Ok(availableRoomTypes);
-			}
-			catch (Exception ex)
-			{
-
-				return BadRequest(ex.Message);
-			}
 		}
 
 		[HttpGet("allroomtypes")]

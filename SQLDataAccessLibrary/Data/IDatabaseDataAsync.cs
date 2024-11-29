@@ -29,5 +29,8 @@ namespace DataAccessLibrary.Data
 		Task<List<BookingFullModel>> GetPartialBookingInfo(int guestId);
 		Task<List<RoomFullModel>> GetAllTypesById(int id, DateTime startDate, DateTime endDate);
 		Task<List<ReviewsFullModel>> GetAllUserReviews(int roomTypeId);
+		Task UpdateReview(int bookingId, string comment, int rating);
+		Task<ReviewsFullModel> GetUserReviewById(int bookingId);
+		Task DeleteReview(int bookingId);
 	}
 }

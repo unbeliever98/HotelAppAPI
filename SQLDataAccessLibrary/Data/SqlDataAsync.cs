@@ -163,9 +163,19 @@ namespace DataAccessLibrary.Data
 			await _db.SaveDataAsync("dbo.spReviews_InsertReview", new {bookingId, comment, rating}, connectionStringName, true);
 		}
 
+		public async Task UpdateReview(int bookingId, string comment, int rating)
+		{
+			await _db.SaveDataAsync("dbo.spReviews_UpdateReview", new { bookingId, comment, rating }, connectionStringName, true);
+		}
+
 		public async Task<List<ReviewsFullModel>> GetAllUserReviews(int roomTypeId)
 		{
 			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("dbo.spReviews_GetUserReviews", new { roomTypeId }, connectionStringName, true);
+		}
+
+		public async Task<ReviewsFullModel> GetUserReviewById(int bookingId)
+		{
+			return (await _db.LoadDataAsync<ReviewsFullModel, dynamic>("dbo.spReviews_GetUserReviewsById", new { bookingId }, connectionStringName, true)).FirstOrDefault();
 		}
 
 		public async Task<bool> CheckIfReviewForBookingExistsAsync(int bookingId)
@@ -177,6 +187,11 @@ namespace DataAccessLibrary.Data
 				return true;
 			}
 			return false;
+		}
+
+		public async Task DeleteReview(int bookingId)
+		{
+			await _db.SaveDataAsync("dbo.spReviews_DeleteReview", new { bookingId }, connectionStringName, true);
 		}
 
 		public async Task <List<int>> GetBookingIdAsync(int guestId)

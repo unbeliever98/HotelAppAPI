@@ -49,6 +49,38 @@
   },
   {
     "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "DeleteReview",
+    "RelativePath": "api/bookings/delete-review",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "UpdateReview",
+    "RelativePath": "api/bookings/edit-review",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DataAccessLibrary.Models.ReviewRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
     "Method": "PostReview",
     "RelativePath": "api/bookings/post-review",
     "HttpMethod": "POST",
