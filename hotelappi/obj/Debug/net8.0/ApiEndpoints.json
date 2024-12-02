@@ -17,6 +17,16 @@
   },
   {
     "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
+    "Method": "GetAllReviews",
+    "RelativePath": "api/bookings/all-reviews",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagementApp.Web.Controllers.BookingsController",
     "Method": "BookRoom",
     "RelativePath": "api/bookings/book",
     "HttpMethod": "POST",

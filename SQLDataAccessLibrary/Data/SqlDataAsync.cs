@@ -41,8 +41,6 @@ namespace DataAccessLibrary.Data
 															   connectionStringName,
 															   false)).First();
 
-			TimeSpan timeStaying = endDate.Date.Subtract(startDate.Date);
-
 			List<RoomModel> availableRooms = await _db.LoadDataAsync<RoomModel, dynamic>("dbo.spRooms_GetAvailableRooms",
 																	 new { startDate, endDate, roomTypeId },
 																	 connectionStringName,
@@ -61,22 +59,6 @@ namespace DataAccessLibrary.Data
 						true);
 		}
 
-		public async Task<List<BookingFullModel>> SearchBookingsAsync(string lastName)
-		{
-			return await _db.LoadDataAsync<BookingFullModel, dynamic>("dbo.spBookings_Search",
-										   new { lastName, startDate = DateTime.Now.Date },
-										   connectionStringName,
-										   true);
-		}
-
-		public async Task CheckInAsync(int bookingId)
-		{
-			await _db.SaveDataAsync(
-				"update dbo.Bookings set CheckedIn=1 where Id=@Id",
-				new { Id = bookingId },
-				connectionStringName,
-				false);
-		}
 
 		public async Task<RoomTypeModel> GetRoomTypeByIdAsync(int id)
 		{
@@ -187,6 +169,11 @@ namespace DataAccessLibrary.Data
 				return true;
 			}
 			return false;
+		}
+
+		public async Task<List<ReviewsFullModel>> GetAllReviews()
+		{
+			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("dbo.spReviews_GetAllReviews", new { }, connectionStringName, true);
 		}
 
 		public async Task DeleteReview(int bookingId)

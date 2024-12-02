@@ -18,7 +18,6 @@ namespace HotelManagementApp.Web.Controllers
 		}
 
 
-		//needs refactoring
 		[Authorize]
 		[HttpPost("{id}")]
 		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel model)
@@ -62,25 +61,6 @@ namespace HotelManagementApp.Web.Controllers
 			});
 		}
 
-		//TODO
-		//[HttpPost("filter")]
-		//public async Task<ActionResult<List<RoomFullModel>>> GetAllRoomTypesById(int id, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-		//{
-		//	try
-		//	{
-		//		var allRooms = await _db.GetAllTypesById(id, startDate, endDate);
-		//		if (allRooms == null)
-		//		{
-		//			return NotFound();
-		//		}
-
-
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		return BadRequest(ex.Message);
-		//	}
-		//}
 
 		[HttpGet("available")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
@@ -94,22 +74,15 @@ namespace HotelManagementApp.Web.Controllers
 		[HttpGet("allroomtypes")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAllRoomTypes()
 		{
-			try
+			var allRoomTypes = await _db.GetAllRoomTypesAsync();
+
+			if (allRoomTypes == null || !allRoomTypes.Any())
 			{
-				var allRoomTypes = await _db.GetAllRoomTypesAsync();
-
-				if (allRoomTypes == null || !allRoomTypes.Any())
-				{
-					return NotFound();
-				}
-
-				return Ok(allRoomTypes);
+				return NotFound();
 			}
-			catch (Exception ex)
-			{
+			return Ok(allRoomTypes);
+			
 
-				return BadRequest(ex.Message);
-			}
 		}
 	}
 }

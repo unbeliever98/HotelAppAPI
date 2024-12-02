@@ -104,6 +104,26 @@ namespace HotelManagementApp.Web.Controllers
 
 		}
 
+		[HttpGet("all-reviews")]
+		public async Task<ActionResult> GetAllReviews()
+		{
+			var reviews = await _db.GetAllReviews();
+			double sum = 0;
+			double average = 0;
+
+			foreach (var review in reviews)
+			{
+				sum += review.Rating;
+			}
+			
+			if(reviews.Count > 0)
+			{
+				average = sum / reviews.Count;
+			}	
+
+			return Ok(new { reviews, average });
+		}
+
 		[Authorize]
 		[HttpPut("edit-review")]
 		public async Task<ActionResult> UpdateReview(ReviewRequestModel model)
@@ -117,9 +137,12 @@ namespace HotelManagementApp.Web.Controllers
 
 			var bookings = await _db.GetBookingIdAsync(userIdInt);
 
+			var filter = new ProfanityFilter.ProfanityFilter();
+			var censoredComment = filter.CensorString(model.Comment);
+
 			if (bookings.Contains(model.BookingId))
 			{
-				await _db.UpdateReview(model.BookingId, model.Comment, model.Rating);
+				await _db.UpdateReview(model.BookingId, censoredComment, model.Rating);
 				return Ok("Review updated successfully!");
 			}
 			else

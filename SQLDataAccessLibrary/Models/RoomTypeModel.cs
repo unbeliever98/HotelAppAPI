@@ -16,6 +16,7 @@ namespace DataAccessLibrary.Models
         public string FullDescription { get; set; }
         public int MaxOccupancy { get; set; }
         public int AvailableRoomsCount { get; set; }
+        public double AverageRating { get; set; }
 
     }
 }
