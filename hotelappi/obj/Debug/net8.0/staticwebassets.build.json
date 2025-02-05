@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "BhtU2KSO2Wv/59HSIJN05kFAwBAELV1fvPuPk9sYfcE=",
+  "Hash": "L4ubxET7KhMTEV7SxpT2v82cKjnU3PhuesUTOEYb7so=",
   "Source": "hotelappi",
   "BasePath": "_content/hotelappi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

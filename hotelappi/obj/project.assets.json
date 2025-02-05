@@ -1071,6 +1071,22 @@
           "lib/netstandard2.0/Mono.TextTemplating.dll": {}
         }
       },
+      "Npgsql/9.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
+        },
+        "compile": {
+          "lib/net8.0/Npgsql.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Profanity.Detector/0.1.8": {
         "type": "package",
         "compile": {
@@ -1837,6 +1853,7 @@
         "dependencies": {
           "Dapper": "2.1.35",
           "Microsoft.Extensions.Configuration.Json": "8.0.1",
+          "Npgsql": "9.0.2",
           "System.Data.SQLite.Core": "1.0.119",
           "System.Data.SqlClient": "4.8.6"
         },
@@ -3710,6 +3727,23 @@
         "mono.texttemplating.nuspec"
       ]
     },
+    "Npgsql/9.0.2": {
+      "sha512": "hCbO8box7i/XXiTFqCJ3GoowyLqx3JXxyrbOJ6om7dr+eAknvBNhhUHeJVGAQo44sySZTfdVffp4BrtPeLZOAA==",
+      "type": "package",
+      "path": "npgsql/9.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/Npgsql.dll",
+        "lib/net6.0/Npgsql.xml",
+        "lib/net8.0/Npgsql.dll",
+        "lib/net8.0/Npgsql.xml",
+        "npgsql.9.0.2.nupkg.sha512",
+        "npgsql.nuspec",
+        "postgresql.png"
+      ]
+    },
     "Profanity.Detector/0.1.8": {
       "sha512": "4rfonJb74vncmdyobz71Wm0N5YeKtReOMIr0P8z/IRP9iJsVcoRfFFfgANopaFjmHI1lZyZL+ps8AKwF1rNjHg==",
       "type": "package",
@@ -4978,23 +5012,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Users\\Slavko Laptop\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\hotelappi.csproj",
+      "projectUniqueName": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\hotelappi\\hotelappi.csproj",
       "projectName": "hotelappi",
-      "projectPath": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\hotelappi.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\hotelappi\\obj\\",
+      "projectPath": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\hotelappi\\hotelappi.csproj",
+      "packagesPath": "C:\\Users\\Slavko Laptop\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\hotelappi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Slavko Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5009,8 +5043,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj": {
-              "projectPath": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj"
+            "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj": {
+              "projectPath": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj"
             }
           }
         }
@@ -5024,7 +5058,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -5076,7 +5111,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

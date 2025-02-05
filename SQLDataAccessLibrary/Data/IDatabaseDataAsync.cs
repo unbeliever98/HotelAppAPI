@@ -15,13 +15,14 @@ namespace DataAccessLibrary.Data
 		Task ChangePasswordAsync(int id, string passwordHash);
 		Task ChangeUserActivityAsync(int id);
 		Task<RoomFullModel> GetFullRoomInfoAsync(int id, DateTime startDate, DateTime endDate);
-		Task<Dictionary<int, int>> GetFeaturePricesAsync(List<int> featureIds);
+		Task<Dictionary<int, int>> GetFeaturePricesAsync(int[] featureIds);
 		Task<int> GetRoomTypePriceAsync(int id);
+		Task<int> GetRoomTypePriceByBookingIdAsync(int bookingId);
 		Task<string> GetRoomNumAsync(int id, DateTime startDate, DateTime endDate);
 		Task PostReviewAsync(int bookingId, string comment, int rating);
 		Task<List<int>> GetBookingIdAsync(int guestId);
 		Task<bool> CheckIfReviewForBookingExistsAsync(int id);
-		Task InsertFeaturesIntoBooking(int bookingId, List<int> featureIds);
+		Task InsertFeaturesIntoBooking(int bookingId, int[] featureIds);
 		Task<BookingFullModel> GetFullBookingInfo(int bookingId, int guestId);
 		Task<int> DeleteBooking(int bookingId, int guestId);
 		Task<List<BookingFullModel>> GetPartialBookingInfo(int guestId);

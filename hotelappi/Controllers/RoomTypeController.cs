@@ -17,7 +17,6 @@ namespace HotelManagementApp.Web.Controllers
 			_db = db;
 		}
 
-
 		[Authorize]
 		[HttpPost("{id}")]
 		public async Task<ActionResult<RoomFullModel>> GetRoomTypeById(int id, [FromBody] FullRoomRequestModel model)

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj": {}
+    "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj": {
+    "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj",
         "projectName": "DataAccessLibrary",
-        "projectPath": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\DataAccessLibrary.csproj",
+        "packagesPath": "C:\\Users\\Slavko Laptop\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Slavko Laptop\\source\\repos\\HotelManagementApp\\SQLDataAccessLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Slavko Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -43,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -56,6 +57,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[9.0.2, )"
             },
             "System.Data.SQLite.Core": {
               "target": "Package",
@@ -82,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -33,7 +33,7 @@ namespace HotelManagementApp.Web.Controllers
 
 			var featureIdInts=new List<int>();
 
-			var featurePrices = await _db.GetFeaturePricesAsync(bookingRequest.SelectedFeatures);
+			var featurePrices = await _db.GetFeaturePricesAsync(bookingRequest.SelectedFeatures.ToArray());
 			var daysStaying = bookingRequest.EndDate.Subtract(bookingRequest.StartDate).Days;
 			var basePrice = await _db.GetRoomTypePriceAsync(bookingRequest.Id);
 			int totalPrice = basePrice * daysStaying + (bookingRequest.NumOfPeople > 1 ? 30 * (bookingRequest.NumOfPeople - 1) * daysStaying : 0);
@@ -63,7 +63,7 @@ namespace HotelManagementApp.Web.Controllers
 
 				if (featureIdInts.Count>1)
 				{
-					await _db.InsertFeaturesIntoBooking(bookingId, featureIdInts); 
+					await _db.InsertFeaturesIntoBooking(bookingId, featureIdInts.ToArray()); 
 				}
 				return Ok(new { bookingId });
 			}
@@ -121,7 +121,7 @@ namespace HotelManagementApp.Web.Controllers
 				average = sum / reviews.Count;
 			}	
 
-			return Ok(new { reviews, average });
+			return Ok(new { reviews = reviews.OrderByDescending(x => x.CreatedAt), average });
 		}
 
 		[Authorize]
@@ -187,8 +187,8 @@ namespace HotelManagementApp.Web.Controllers
 			{
 				return Unauthorized("Invalid token.");
 			}
+			var basePrice = await _db.GetRoomTypePriceByBookingIdAsync(id);
 
-			
 			var result=await _db.GetFullBookingInfo(id, userIdInt);
 			var reviewExists = await _db.CheckIfReviewForBookingExistsAsync(id);
 			var review = await _db.GetUserReviewById(id);
@@ -200,7 +200,7 @@ namespace HotelManagementApp.Web.Controllers
 
 				bool isExpired = DateTime.Now.Date > result.EndDate;
 
-				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired, reviewExists, review});
+				return Ok(new {bookingId=result.Id, result.StartDate, result.EndDate, result.NumOfPeople, basePrice, result.TotalPrice, result.RoomNum, roomTitle=result.Title, result.Description, result.Image, result.FeatureNames, result.FeaturePrices, pricePerNight, isExpired, reviewExists, review});
 			}
 			else
 			{
@@ -222,14 +222,8 @@ namespace HotelManagementApp.Web.Controllers
 
 			var result = await _db.DeleteBooking(bookingId, userIdInt);
 
-			if (result > 0)
-			{
-				return Ok("Booking deleted successfully!");
-			}
-			else
-			{
-				return NotFound("No booking found or you are not authorized to delete it!");
-			}
+			return Ok("Booking deleted successfully!");
+
 		}
 
 		[Authorize]

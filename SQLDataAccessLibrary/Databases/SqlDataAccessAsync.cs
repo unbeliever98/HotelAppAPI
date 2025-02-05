@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -24,7 +24,7 @@ namespace DataAccessLibrary.Databases
 			string connectionString = _config.GetConnectionString(connectionStringName);
 			CommandType commandType = isStoredProcedure ? CommandType.StoredProcedure : CommandType.Text;
 
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(connectionString))
 			{
 				var rows = await connection.QueryAsync<T>(sqlStatement, parameters, commandType: commandType);
 				return rows.ToList();
@@ -36,7 +36,7 @@ namespace DataAccessLibrary.Databases
 			string connectionString = _config.GetConnectionString(connectionStringName);
 			CommandType commandType = isStoredProcedure ? CommandType.StoredProcedure : CommandType.Text;
 
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(connectionString))
 			{
 				return await connection.ExecuteAsync(sqlStatement, parameters, commandType: commandType);
 			}

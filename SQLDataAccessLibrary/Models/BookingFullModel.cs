@@ -22,8 +22,8 @@ namespace DataAccessLibrary.Models
         public string Description { get; set; }
         public string Image { get; set; }
         public int NumOfPeople { get; set; }
-        public string FeatureNames { get; set; } 
-        public string FeaturePrices { get; set; }
+        public string[] FeatureNames { get; set; } 
+        public double[] FeaturePrices { get; set; }
 
     }
 }

@@ -11,3 +11,16 @@ C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net
 C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.pdb
 C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\ref\DataAccessLibrary.dll
 C:\Users\User\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.sourcelink.json
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\bin\Debug\net8.0\DataAccessLibrary.deps.json
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\bin\Debug\net8.0\DataAccessLibrary.dll
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\bin\Debug\net8.0\DataAccessLibrary.pdb
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.csproj.AssemblyReference.cache
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.AssemblyInfoInputs.cache
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.AssemblyInfo.cs
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.sourcelink.json
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.dll
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\refint\DataAccessLibrary.dll
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\DataAccessLibrary.pdb
+C:\Users\Slavko Laptop\source\repos\HotelManagementApp\SQLDataAccessLibrary\obj\Debug\net8.0\ref\DataAccessLibrary.dll

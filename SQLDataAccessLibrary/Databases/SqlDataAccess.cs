@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +29,7 @@ namespace DataAccessLibrary.Databases
 				commandType = CommandType.StoredProcedure;
 			}
 		
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(connectionString))
 			{
 				List<T> rows = connection.Query<T>(sqlStatement, parameters, commandType: commandType).ToList();
 				return rows;
@@ -46,7 +46,7 @@ namespace DataAccessLibrary.Databases
 				commandType = CommandType.StoredProcedure;
 			}
 
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(connectionString))
 			{
 				connection.Execute(sqlStatement, parameters, commandType: commandType);
 			}
