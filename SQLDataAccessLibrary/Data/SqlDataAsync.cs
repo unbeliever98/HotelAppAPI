@@ -17,8 +17,9 @@ namespace DataAccessLibrary.Data
 		public SqlDataAsync(ISqlDataAccessAsync db, string connectionStringName)
 		{
 			_db = db;
-			this.connectionStringName = connectionStringName;
-			connectionStringName=Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+            connectionStringName = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+            this.connectionStringName = connectionStringName;
+			
         }
 
 		public async Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate)
