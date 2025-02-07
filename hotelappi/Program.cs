@@ -31,15 +31,24 @@ namespace hotelappi
 				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 			}).AddJwtBearer(options =>
 			{
-				options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
+                ?? throw new ArgumentNullException("JWT_KEY", "JWT_KEY environment variable is missing.");
+
+                var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")
+                                ?? throw new ArgumentNullException("JWT_ISSUER", "JWT_ISSUER environment variable is missing.");
+
+                var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
+                                  ?? throw new ArgumentNullException("JWT_AUDIENCE", "JWT_AUDIENCE environment variable is missing.");
+
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
 				{
 					ValidateIssuer=true,
 					ValidateAudience=true,
 					ValidateLifetime=true,
 					ValidateIssuerSigningKey=true,
-					ValidIssuer = builder.Configuration["Jwt:Issuer"],
-					ValidAudience = builder.Configuration["Jwt:Audience"],
-					IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+					ValidIssuer = jwtIssuer,
+					ValidAudience = jwtAudience,
+					IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
 				};
 
 				options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
