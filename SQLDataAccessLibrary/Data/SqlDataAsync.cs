@@ -12,12 +12,14 @@ namespace DataAccessLibrary.Data
 	public class SqlDataAsync : IDatabaseDataAsync
 	{
 		private readonly ISqlDataAccessAsync _db;
-		private const string connectionStringName = "SqlDb";
+		private readonly string connectionStringName;
 
-		public SqlDataAsync(ISqlDataAccessAsync db)
+		public SqlDataAsync(ISqlDataAccessAsync db, string connectionStringName)
 		{
 			_db = db;
-		}
+			this.connectionStringName = connectionStringName;
+			connectionStringName=Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+        }
 
 		public async Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate)
 		{

@@ -13,15 +13,14 @@ namespace DataAccessLibrary.Databases
 {
 	public class SQLDataAccess : ISQLDataAccess
 	{
-		private readonly IConfiguration _config;
+        private readonly string _connectionString;
 
-		public SQLDataAccess(IConfiguration config)
+        public SQLDataAccess(IConfiguration config)
 		{
-			_config = config;
-		}
+            _connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+        }
 		public List<T> LoadData<T, U>(string sqlStatement, U parameters, string connectionStringName, bool isStoredProcedure = false)
 		{
-			string connectionString = _config.GetConnectionString(connectionStringName);
 			CommandType commandType = CommandType.Text;
 
 			if (isStoredProcedure == true)
@@ -29,7 +28,7 @@ namespace DataAccessLibrary.Databases
 				commandType = CommandType.StoredProcedure;
 			}
 		
-			using (IDbConnection connection = new NpgsqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(_connectionString))
 			{
 				List<T> rows = connection.Query<T>(sqlStatement, parameters, commandType: commandType).ToList();
 				return rows;
@@ -38,7 +37,6 @@ namespace DataAccessLibrary.Databases
 
 		public void SaveData<T>(string sqlStatement, T parameters, string connectionStringName, bool isStoredProcedure = false)
 		{
-			string connectionString = _config.GetConnectionString(connectionStringName);
 			CommandType commandType = CommandType.Text;
 
 			if (isStoredProcedure==true)
@@ -46,7 +44,7 @@ namespace DataAccessLibrary.Databases
 				commandType = CommandType.StoredProcedure;
 			}
 
-			using (IDbConnection connection = new NpgsqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(_connectionString))
 			{
 				connection.Execute(sqlStatement, parameters, commandType: commandType);
 			}
