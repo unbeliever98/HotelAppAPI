@@ -60,7 +60,7 @@ namespace HotelManagementApp.Web.Controllers
 			});
 		}
 
-
+		[AllowAnonymous]
 		[HttpGet("available")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAvailableRoomTypes([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
 		{
@@ -70,6 +70,7 @@ namespace HotelManagementApp.Web.Controllers
 
 		}
 
+		[AllowAnonymous]
 		[HttpGet("allroomtypes")]
 		public async Task<ActionResult<List<RoomTypeModel>>> GetAllRoomTypes()
 		{

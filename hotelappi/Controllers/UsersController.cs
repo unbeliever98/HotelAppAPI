@@ -24,6 +24,7 @@ namespace hotelappi.Controllers
 			_config = config;
 		}
 
+		[AllowAnonymous]
 		[HttpPost("register")]
 		public async Task <ActionResult> Register([FromBody]GuestDTO guest)
 		{
@@ -52,6 +53,7 @@ namespace hotelappi.Controllers
 			}
 		}
 
+		[AllowAnonymous]
 		[HttpPost("login")]
 		public async Task<ActionResult> Login([FromBody] LoginDTO login)
 		{

@@ -104,6 +104,7 @@ namespace HotelManagementApp.Web.Controllers
 
 		}
 
+		[AllowAnonymous]
 		[HttpGet("all-reviews")]
 		public async Task<ActionResult> GetAllReviews()
 		{
