@@ -71,19 +71,28 @@ namespace hotelappi.Controllers
 				return Unauthorized("Invalid email or password.");
 			}
 
-			var claims = new[]
+            var jwtSubject = Environment.GetEnvironmentVariable("JWT_SUBJECT")
+                 ?? throw new InvalidOperationException("JWT_SUBJECT is not set.");
+            var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")
+                            ?? throw new InvalidOperationException("JWT_ISSUER is not set.");
+            var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
+                              ?? throw new InvalidOperationException("JWT_AUDIENCE is not set.");
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
+                         ?? throw new InvalidOperationException("JWT_KEY is not set.");
+
+            var claims = new[]
 {
-				new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
+				new Claim(JwtRegisteredClaimNames.Sub, jwtSubject),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 				new Claim("Email", user.Email.ToString()),
 				new Claim("UserId",user.Id.ToString())
 			};
 
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 			var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-			var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-									_config["Jwt:Audience"],
+			var token = new JwtSecurityToken(jwtIssuer,
+									jwtAudience,
 									claims,
 									expires: DateTime.UtcNow.AddMinutes(30),
 									signingCredentials: signIn);
@@ -104,6 +113,7 @@ namespace hotelappi.Controllers
 
 			return Ok(new {Token=tokenValue, User=user.Email, user.FirstName, user.LastName, user.IsActive});
 		}
+
 		[Authorize]
 		[HttpPut("update-password")]
 		public async Task <ActionResult> UpdatePassword([FromBody] UpdatePasswordModel pwModel)
