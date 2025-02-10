@@ -12,14 +12,17 @@ namespace DataAccessLibrary.Data
 	public class SqlDataAsync : IDatabaseDataAsync
 	{
 		private readonly ISqlDataAccessAsync _db;
-		private readonly string _connectionStringName= Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+		private readonly string _connectionStringName;
 
-		public SqlDataAsync(ISqlDataAccessAsync db)
-		{
-			_db = db;
+        public SqlDataAsync(ISqlDataAccessAsync db)
+        {
+            _db = db;
+            _connectionStringName = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+                                    ?? throw new InvalidOperationException("Database connection string is not set.");
         }
 
-		public async Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate)
+
+        public async Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate)
 		{
 			return await _db.LoadDataAsync<RoomTypeModel, dynamic>("select * from sproomtypes_getavailabletypes(@StartDate::date,@EndDate::date)",
 											   new {StartDate= startDate.Date, EndDate=endDate.Date },
