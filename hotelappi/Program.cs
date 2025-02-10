@@ -25,44 +25,56 @@ namespace hotelappi
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
-			builder.Services.AddAuthentication(options =>
-			{
-				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			}).AddJwtBearer(options =>
-			{
-                var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
-                ?? throw new ArgumentNullException("JWT_KEY", "JWT_KEY environment variable is missing.");
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                string jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
+                                ?? throw new ArgumentNullException("JWT_KEY", "JWT_KEY environment variable is missing.");
+                string jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")
+                                   ?? throw new ArgumentNullException("JWT_ISSUER", "JWT_ISSUER environment variable is missing.");
+                string jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
+                                     ?? throw new ArgumentNullException("JWT_AUDIENCE", "JWT_AUDIENCE environment variable is missing.");
 
-                var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")
-                                ?? throw new ArgumentNullException("JWT_ISSUER", "JWT_ISSUER environment variable is missing.");
+                if (string.IsNullOrWhiteSpace(jwtKey) ||
+                    string.IsNullOrWhiteSpace(jwtIssuer) ||
+                    string.IsNullOrWhiteSpace(jwtAudience))
+                {
+                    throw new ArgumentException("JWT environment variables must not be empty.");
+                }
 
-                var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
-                                  ?? throw new ArgumentNullException("JWT_AUDIENCE", "JWT_AUDIENCE environment variable is missing.");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtIssuer,
+                    ValidAudience = jwtAudience,
+                    IssuerSigningKeyResolver = (token, securityToken, kid, validationParameters) =>
+                    {
+                        return new List<SecurityKey>
+                        {
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                        };
+                    }
+                };
 
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-				{
-					ValidateIssuer=true,
-					ValidateAudience=true,
-					ValidateLifetime=true,
-					ValidateIssuerSigningKey=true,
-					ValidIssuer = jwtIssuer,
-					ValidAudience = jwtAudience,
-					IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-				};
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.ContentType = "application/json";
+                        return context.Response.WriteAsync("{\"message\": \"Invalid token.\"}");
+                    }
+                };
+            });
 
-				options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
-				{
-					OnAuthenticationFailed = context =>
-					{
-						context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-						context.Response.ContentType = "application/json";
-						return context.Response.WriteAsync("{\"message\": \"Invalid token.\"}");
-					}
-				};
-			});
-
-			builder.Services.AddScoped<ISqlDataAccessAsync, SqlDataAccessAsync>();
+            builder.Services.AddScoped<ISqlDataAccessAsync, SqlDataAccessAsync>();
 			builder.Services.AddScoped<IDatabaseDataAsync, SqlDataAsync>();
 
 			var app = builder.Build();
