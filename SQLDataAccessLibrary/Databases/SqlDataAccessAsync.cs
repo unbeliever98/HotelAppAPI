@@ -21,10 +21,9 @@ namespace DataAccessLibrary.Databases
 
 		public async Task<List<T>> LoadDataAsync<T, U>(string sqlStatement, U parameters, string connectionStringName, bool isStoredProcedure = false)
 		{
-			string connectionString = _config.GetConnectionString(connectionStringName);
 			CommandType commandType = isStoredProcedure ? CommandType.StoredProcedure : CommandType.Text;
 
-			using (IDbConnection connection = new NpgsqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(connectionStringName))
 			{
 				var rows = await connection.QueryAsync<T>(sqlStatement, parameters, commandType: commandType);
 				return rows.ToList();
@@ -32,11 +31,10 @@ namespace DataAccessLibrary.Databases
 		}
 
 		public async Task<int> SaveDataAsync<T>(string sqlStatement, T parameters, string connectionStringName, bool isStoredProcedure = false)
-		{
-			string connectionString = _config.GetConnectionString(connectionStringName);
+		{ 
 			CommandType commandType = isStoredProcedure ? CommandType.StoredProcedure : CommandType.Text;
 
-			using (IDbConnection connection = new NpgsqlConnection(connectionString))
+			using (IDbConnection connection = new NpgsqlConnection(connectionStringName))
 			{
 				return await connection.ExecuteAsync(sqlStatement, parameters, commandType: commandType);
 			}
