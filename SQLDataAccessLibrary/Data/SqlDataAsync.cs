@@ -12,21 +12,18 @@ namespace DataAccessLibrary.Data
 	public class SqlDataAsync : IDatabaseDataAsync
 	{
 		private readonly ISqlDataAccessAsync _db;
-		private readonly string connectionStringName;
+		private readonly string _connectionStringName= Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
 
-		public SqlDataAsync(ISqlDataAccessAsync db, string connectionStringName)
+		public SqlDataAsync(ISqlDataAccessAsync db)
 		{
 			_db = db;
-            connectionStringName = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
-            this.connectionStringName = connectionStringName;
-			
         }
 
 		public async Task<List<RoomTypeModel>> GetAvailableRoomTypesAsync(DateTime startDate, DateTime endDate)
 		{
 			return await _db.LoadDataAsync<RoomTypeModel, dynamic>("select * from sproomtypes_getavailabletypes(@StartDate::date,@EndDate::date)",
 											   new {StartDate= startDate.Date, EndDate=endDate.Date },
-											   connectionStringName,
+											   _connectionStringName,
 											   false);
 		}
 
@@ -36,17 +33,17 @@ namespace DataAccessLibrary.Data
 
 			GuestModel guest = (await _db.LoadDataAsync<GuestModel, dynamic>("select * from spGuests_GetGuestById(@Id)",
 													   new { Id=id },
-													   connectionStringName,
+													   _connectionStringName,
 													   false)).First();
 
 			RoomTypeModel roomType = (await _db.LoadDataAsync<RoomTypeModel, dynamic>("select * from sproomtypes_getbyid(@Id)",
 															   new { Id=roomTypeId },
-															   connectionStringName,
+															   _connectionStringName,
 															   false)).First();
 
 			List<RoomModel> availableRooms = await _db.LoadDataAsync<RoomModel, dynamic>("select * from sprooms_getavailablerooms(@StartDate::date,@EndDate::date, @Id)",
 																	 new { StartDate=startDate.Date, EndDate=endDate.Date, Id=roomTypeId },
-																	 connectionStringName,
+																	 _connectionStringName,
 																	 false);
 			await _db.SaveDataAsync("SELECT spbookings_insert(@RoomId, @GuestId, @StartDate::date, @EndDate::date, @TotalCost, @NumOfPeople);",
 						new
@@ -58,7 +55,7 @@ namespace DataAccessLibrary.Data
 							TotalCost=totalCost,
 							NumOfPeople=numOfPeople
 						},
-						connectionStringName,
+						_connectionStringName,
 						false);
 		}
 
@@ -67,7 +64,7 @@ namespace DataAccessLibrary.Data
 		{
 			return (await _db.LoadDataAsync<RoomTypeModel, dynamic>("dbo.spRoomTypes_GetById",
 											   new { id },
-											   connectionStringName,
+											   _connectionStringName,
 											   true)).First();
 		}
 
@@ -75,7 +72,7 @@ namespace DataAccessLibrary.Data
 		{
 			return await _db.LoadDataAsync<RoomTypeModel, dynamic>("select * from sproomtypes_getallroomtypes()",
 														  new { },
-														  connectionStringName,
+														  _connectionStringName,
 														  false);
 		}
 
@@ -90,88 +87,88 @@ namespace DataAccessLibrary.Data
                 LastName = lastName,
                 Email = email,
                 PasswordHash = passwordHash
-            }, connectionStringName, false);
+            }, _connectionStringName, false);
         }
 
 
         public async Task<List<string>> GetAllGuestEmailsAsync()
 		{
-			return await _db.LoadDataAsync<string, dynamic>("select * from spGuests_GetEmails();", new { }, connectionStringName, false);		
+			return await _db.LoadDataAsync<string, dynamic>("select * from spGuests_GetEmails();", new { }, _connectionStringName, false);		
 		}
 
 		public async Task<GuestModel> GetGuestInfoAsync(string email)
 		{
-			return (await _db.LoadDataAsync<GuestModel, dynamic>("SELECT * FROM spguests_getemail(@Email);", new {Email=email}, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<GuestModel, dynamic>("SELECT * FROM spguests_getemail(@Email);", new {Email=email}, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task<GuestModel> GetGuestByIdAsync(int id)
 		{
-			return (await _db.LoadDataAsync<GuestModel, dynamic>("select * from spGuests_GetGuestById(@Id)", new {Id=id }, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<GuestModel, dynamic>("select * from spGuests_GetGuestById(@Id)", new {Id=id }, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task ChangePasswordAsync(int id, string passwordHash)
 		{
-			await _db.SaveDataAsync("select SpGuests_UpdatePassword(@PasswordHash, @Id)", new { PasswordHash=passwordHash,Id=id }, connectionStringName, false);
+			await _db.SaveDataAsync("select SpGuests_UpdatePassword(@PasswordHash, @Id)", new { PasswordHash=passwordHash,Id=id }, _connectionStringName, false);
 		}
 
 		public async Task ChangeUserActivityAsync(int id)
 		{
-			await _db.SaveDataAsync("select spGuests_ChangeActivity(@Id)", new { Id=id }, connectionStringName, false);
+			await _db.SaveDataAsync("select spGuests_ChangeActivity(@Id)", new { Id=id }, _connectionStringName, false);
 		}
 
 		public async Task<RoomFullModel> GetFullRoomInfoAsync(int id, DateTime startDate, DateTime endDate)
 		{
-			return (await _db.LoadDataAsync<RoomFullModel, dynamic>("SELECT * FROM sproomtypes_getbyidwithfeatures(@Id, @StartDate::date, @EndDate::date);", new { Id= id, StartDate=startDate.Date, EndDate = endDate.Date }, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<RoomFullModel, dynamic>("SELECT * FROM sproomtypes_getbyidwithfeatures(@Id, @StartDate::date, @EndDate::date);", new { Id= id, StartDate=startDate.Date, EndDate = endDate.Date }, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task<Dictionary<int, int>> GetFeaturePricesAsync(int[] featureIds)
 		{
 
-			return (await _db.LoadDataAsync <KeyValuePair<int, int>, dynamic>("select * from spRoomFeatures_GetPriceById(@Ids)", new {Ids=featureIds}, connectionStringName, false)).ToDictionary(x=> x.Key, x=>x.Value);
+			return (await _db.LoadDataAsync <KeyValuePair<int, int>, dynamic>("select * from spRoomFeatures_GetPriceById(@Ids)", new {Ids=featureIds}, _connectionStringName, false)).ToDictionary(x=> x.Key, x=>x.Value);
 		}
 
 		public async Task<int> GetRoomTypePriceAsync(int id)
 		{
-			return (await _db.LoadDataAsync<int, dynamic>("select * from spRoomType_GetPrice(@Id)", new { Id=id }, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<int, dynamic>("select * from spRoomType_GetPrice(@Id)", new { Id=id }, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task<int> GetRoomTypePriceByBookingIdAsync(int bookingId)
 		{
-			return (await _db.LoadDataAsync<int, dynamic>("select * from spRoomType_GetPriceByBookingId(@Id)", new {Id= bookingId }, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<int, dynamic>("select * from spRoomType_GetPriceByBookingId(@Id)", new {Id= bookingId }, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task<string> GetRoomNumAsync(int roomTypeId, DateTime startDate, DateTime endDate)
 		{
 			RoomModel availableRoom = (await _db.LoadDataAsync<RoomModel, dynamic>("dbo.spRooms_GetAvailableRooms",
 																	 new { startDate, endDate, roomTypeId },
-																	 connectionStringName,
+																	 _connectionStringName,
 																	 true)).First();
 			return availableRoom.RoomNum;
 		}
 
 		public async Task PostReviewAsync(int bookingId, string comment, int rating)
 		{ 
-			await _db.SaveDataAsync("select spreviews_insertreview(@Id, @Comment,@Rating)", new {Id=bookingId, Comment=comment,Rating=rating}, connectionStringName, false);
+			await _db.SaveDataAsync("select spreviews_insertreview(@Id, @Comment,@Rating)", new {Id=bookingId, Comment=comment,Rating=rating}, _connectionStringName, false);
 		}
 
 		public async Task UpdateReview(int bookingId, string comment, int rating)
 		{
-			await _db.SaveDataAsync("select spreviews_updatereview(@Id, @Comment, @Rating)", new { Id=bookingId, Comment=comment, Rating=rating }, connectionStringName, false);
+			await _db.SaveDataAsync("select spreviews_updatereview(@Id, @Comment, @Rating)", new { Id=bookingId, Comment=comment, Rating=rating }, _connectionStringName, false);
 		}
 
 		public async Task<List<ReviewsFullModel>> GetAllUserReviews(int roomTypeId)
 		{
-			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("select * from spreviews_getuserreviews(@Id)", new { Id=roomTypeId }, connectionStringName, false);
+			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("select * from spreviews_getuserreviews(@Id)", new { Id=roomTypeId }, _connectionStringName, false);
 		}
 
 		public async Task<ReviewsFullModel> GetUserReviewById(int bookingId)
 		{
-			return (await _db.LoadDataAsync<ReviewsFullModel, dynamic>("select * from spReviews_GetUserReviewsById (@Id)", new {Id= bookingId }, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<ReviewsFullModel, dynamic>("select * from spReviews_GetUserReviewsById (@Id)", new {Id= bookingId }, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task<bool> CheckIfReviewForBookingExistsAsync(int bookingId)
 		{
-			var results = await _db.LoadDataAsync<int, dynamic>("select * from spReviews_CheckForBookingId(@Id)", new {Id=bookingId}, connectionStringName, false);
+			var results = await _db.LoadDataAsync<int, dynamic>("select * from spReviews_CheckForBookingId(@Id)", new {Id=bookingId}, _connectionStringName, false);
 
 			if(results.Count > 0)
 			{
@@ -182,42 +179,42 @@ namespace DataAccessLibrary.Data
 
 		public async Task<List<ReviewsFullModel>> GetAllReviews()
 		{
-			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("select * from spreviews_getallreviews()", new { }, connectionStringName, false);
+			return await _db.LoadDataAsync<ReviewsFullModel, dynamic>("select * from spreviews_getallreviews()", new { }, _connectionStringName, false);
 		}
 
 		public async Task DeleteReview(int bookingId)
 		{
-			await _db.SaveDataAsync("select spReviews_DeleteReview(@Id)", new { Id=bookingId }, connectionStringName, false);
+			await _db.SaveDataAsync("select spReviews_DeleteReview(@Id)", new { Id=bookingId }, _connectionStringName, false);
 		}
 
 		public async Task <List<int>> GetBookingIdAsync(int guestId)
 		{
-			return await _db.LoadDataAsync<int, dynamic>("select * from spbookings_getbookingbyguestid(@Id)", new {Id= guestId }, connectionStringName, false);
+			return await _db.LoadDataAsync<int, dynamic>("select * from spbookings_getbookingbyguestid(@Id)", new {Id= guestId }, _connectionStringName, false);
 		}
 
 		public async Task InsertFeaturesIntoBooking(int bookingId, int[] featureIds)
 		{
-			await _db.SaveDataAsync("select spBookingFeatures_InsertBookingFeature(@BookingId, @Ids)", new {BookingId=bookingId, Ids=featureIds},connectionStringName, false);
+			await _db.SaveDataAsync("select spBookingFeatures_InsertBookingFeature(@BookingId, @Ids)", new {BookingId=bookingId, Ids=featureIds},_connectionStringName, false);
 		}
 		
 		public async Task <BookingFullModel> GetFullBookingInfo(int bookingId, int guestId)
 		{
-			return (await _db.LoadDataAsync<BookingFullModel, dynamic>("select * from spbookings_getfullbookinginfo(@BookingId,@GuestId)", new { BookingId=bookingId, GuestId=guestId }, connectionStringName, false)).FirstOrDefault();
+			return (await _db.LoadDataAsync<BookingFullModel, dynamic>("select * from spbookings_getfullbookinginfo(@BookingId,@GuestId)", new { BookingId=bookingId, GuestId=guestId }, _connectionStringName, false)).FirstOrDefault();
 		}
 
 		public async Task<int> DeleteBooking(int bookingId, int guestId)
 		{
-			return await _db.SaveDataAsync("select spbookings_deletebooking(@BookingId,@GuestId)", new { BookingId=bookingId,GuestId= guestId }, connectionStringName, false);
+			return await _db.SaveDataAsync("select spbookings_deletebooking(@BookingId,@GuestId)", new { BookingId=bookingId,GuestId= guestId }, _connectionStringName, false);
 		}
 
 		public async Task<List<BookingFullModel>> GetPartialBookingInfo(int guestId)
 		{
-			return await _db.LoadDataAsync<BookingFullModel, dynamic>("select * from spbookings_getpartialbookinginfo(@GuestId)", new { GuestId=guestId }, connectionStringName, false);
+			return await _db.LoadDataAsync<BookingFullModel, dynamic>("select * from spbookings_getpartialbookinginfo(@GuestId)", new { GuestId=guestId }, _connectionStringName, false);
 		}
 
 		public async Task<List<RoomFullModel>> GetAllTypesById (int id, DateTime startDate, DateTime endDate)
 		{
-			return await _db.LoadDataAsync<RoomFullModel, dynamic>("dbo.spRoomTypes_GetAllTypesByIdWithFeatures", new { id, startDate, endDate }, connectionStringName, true);
+			return await _db.LoadDataAsync<RoomFullModel, dynamic>("dbo.spRoomTypes_GetAllTypesByIdWithFeatures", new { id, startDate, endDate }, _connectionStringName, true);
 		}
 	}
 }
