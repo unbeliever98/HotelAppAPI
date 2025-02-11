@@ -1,1 +1,1 @@
-An API I've been working on in C# that supports the frontend (Angular) my friend is designing as a mutual project. The API communicates with the MSSQL database on the Azure cloud.
+An API I've been working on in C# that supports the frontend (Angular) my friend is designing as a mutual project. The main branch is compatible for Azure services (Azure MSSQL server and Web Service), whilst the postgresql-version branch is compatible for PostgreSQL databases and Web Services that support Docker.
